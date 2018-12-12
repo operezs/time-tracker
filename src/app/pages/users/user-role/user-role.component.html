@@ -1,0 +1,22 @@
+<nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-md-10">
+          User Role
+        </div>
+        <div class="col-md-2">
+            <button type="button" style = "float: right" 
+                class="btn btn-primary d-flex" 
+                (click)="openAddRoleModal()">
+              Add New
+              <i class="ion-plus-round"></i>
+            </button>
+        </div>
+      </div>
+    </nb-card-header>
+  
+    <nb-card-body>    
+      <ng2-smart-table [settings]="settings" [source]="source">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>

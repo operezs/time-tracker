@@ -1,0 +1,71 @@
+@import '../../../@theme/styles/themes';
+
+.input-description {
+    font-size: 70%;
+    align-content: flex-end;
+}
+
+
+@include nb-install-component() {
+  nb-card-body {
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
+::ng-deep .dropdown-btn {
+  border: none !important;
+  padding: 0px !important;
+ }
+
+ ::ng-deep .multiselect-dropdown .dropdown-btn  {
+  border: none !important;
+  padding: 0px !important; 
+ }
+
+ ::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-down {
+  border: none !important;
+  padding: 0px !important; 
+ }
+
+ .multiselect-dropdown-new /deep/ {
+  border: none !important;
+  padding: 0px !important; 
+ }
+
+ ::ng-deep .multiselect-dropdown /deep/ {
+  border: none !important;
+  padding: 0px !important; 
+ }
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+
+  .fast {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fadeIn {
+    animation-name: fadeIn;
+  }

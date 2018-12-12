@@ -1,0 +1,25 @@
+@import '../../../@theme/styles/themes';
+
+.input-description {
+    font-size: 70%;
+    align-content: flex-end;
+}
+
+@include nb-install-component() {
+  nb-card-body {
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
+.show-front {
+  z-index: 3000 !important;
+}
+
+/deep/ .cdk-overlay-container {
+  z-index: 3000 !important;
+}

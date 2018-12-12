@@ -1,0 +1,51 @@
+<nb-card>
+  <nb-card-header>
+      <span>User Info</span>
+  </nb-card-header>
+     
+  <nb-card-body>
+      <div class = "row" *ngIf="user && role"> 
+                <div class = "col-md-4">
+                    <label>
+                        <i class="nb-person icon-size"></i>
+                        <strong class = "title"> First name:  </strong> 
+                        <strong class = "value">{{user.firstName}}</strong>
+                    </label>
+                    <hr>
+                    <label>
+                        <i class="nb-gear icon-size"></i>
+                        <strong class = "title"> Role:  </strong> 
+                        <strong class = "value">{{role.roleName}}</strong>
+                    </label>
+                </div>              
+                
+                <div class = "col-md-4">    
+                    <label>
+                        <i class="nb-person icon-size"></i>
+                        <strong class = "title"> Last name:  </strong>
+                        <strong class = "value">{{user.lastName}}</strong>
+                    </label>
+                    <hr>
+                    <label>
+                        <i class="nb-compose icon-size"></i>                        
+                        <strong class = "title"> Work mode:  </strong>
+                        <strong class = "value">{{role.workMode}}</strong>
+                    </label>
+                </div>              
+    
+                <div class = "col-md-4 ">            
+                    <label>
+                        <i class="nb-email icon-size"></i>
+                        <strong class = "title"> e-Mail:  </strong> 
+                        <strong class = "value">{{user.email}}</strong>
+                    </label>
+                    <hr>
+                    <label>
+                        <i class="nb-coffee-maker icon-size"></i>                        
+                        <strong class = "title"> Basic salary:  </strong>
+                        <strong class = "value">{{role.basicSalary}}</strong>                    
+                    </label>
+                </div>  
+      </div>
+  </nb-card-body>
+</nb-card>

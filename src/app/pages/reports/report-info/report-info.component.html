@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <span>Report Info</span>
+</div>
+
+<div class="modal-body">
+    <div>
+        <label><strong>User Name:</strong> </label>
+        <div class = "container">
+          <h4>{{report.users.firstName}}</h4>
+        </div>
+    </div>
+    <br>
+
+    <div class = "row">
+        <div class = "col-md-6">
+          <label><strong>Time Worked:</strong> </label>
+          <div class = "container">
+            <h6>{{report.time}}</h6>
+          </div>
+        </div>
+        <div class = "col-md-6">
+            <label><strong>Report Date:</strong> </label>
+            <div class = "container">
+                <label><strong>{{dateReport}}</strong> </label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div>
+        <label><strong>Project Name:</strong> </label>
+        <div class = "container">
+          <h4>{{report.projects.projectName}}</h4>
+        </div>
+    </div>
+    <br>
+    <div>
+      <label><strong>Description:</strong> </label>
+      <div class = "container"> 
+        <p>{{report.description}}</p>
+      </div>
+    </div>
+  </div>
+
+
+<div class="modal-footer">
+  <button type="submit" class="btn btn-md btn-primary" (click)="closeModal()">Ok</button>
+</div>

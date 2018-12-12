@@ -1,0 +1,30 @@
+<nb-card>
+  <nb-card-header>
+    <button class = "btn btn-outline btn-info" 
+            (click)="goBack()">
+      <i class="ion-arrow-left-c"></i>
+       {{user.firstName}}
+    </button>
+
+    <button  class = "btn btn-outline btn-success float-right " 
+            (click)="openPaymentModal()">
+        View Payment
+    </button>
+  </nb-card-header>
+
+  <nb-card-body>        
+          <div>
+            <ngx-user-card [user] = "user" [role]="role"></ngx-user-card>
+          </div>
+
+    <!-- <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onRowSelected($event)">
+    </ng2-smart-table> -->
+  </nb-card-body>
+</nb-card>
+
+<ngx-project-card [projects] = "projects" 
+                  [userMountWork] = "userMountWork"
+                  [spentTimeUser] = "spentTimeUser">
+</ngx-project-card>
+
+<ngx-report-list [userInfo] = "userInfo"></ngx-report-list>

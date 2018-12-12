@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <span>Role Info</span>
+</div>
+<div class="modal-body">
+
+    <label><strong>Role Name:</strong> </label>
+      <div class = "container">
+        <h4>{{role.roleName}}</h4>
+      </div>
+    <br>
+    <label><strong>Work Mode:</strong> </label>
+      <div class = "container">
+        {{role.workMode}}
+      </div>
+
+  <br> 
+  <label>Pay mode structure:</label>
+  <div class = "row container">
+    <div class = "col-md-6">
+      <label><strong>Salary:</strong> </label>
+        <div class = "container">
+          <h6>{{role.basicSalary}}</h6>
+        </div>
+    </div>
+    <div class = "col-md-6">
+      <label><strong>Pay Hours:</strong> </label>
+        <div class = "container">
+          <h6>{{role.payExtraHours}}</h6>
+        </div>
+    </div>
+    <!-- <div class = "col-md-3">
+      <label><strong>Extra Hours:</strong> </label>
+        <div class = "container">
+          <h6>{{role.extraHours}}</h6>
+        </div>
+    </div>
+    <div class = "col-md-3">
+      <label><strong>Pay Extra:</strong> </label>
+        <div class = "container">
+          <h6>{{role.extraHours}}</h6>
+        </div>
+    </div> -->
+  </div>  
+  <br>
+  <div>
+    <label><strong>Description:</strong> </label>
+      <div class = "container"> 
+        <p>{{role.description}}</p>
+      </div>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-md btn-primary" (click)="closeModal()">Ok</button>
+</div>

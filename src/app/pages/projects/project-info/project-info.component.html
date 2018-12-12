@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <span>Project Info</span>
+</div>
+<div class="modal-body">
+    <div>
+      <label><strong>Name:</strong> </label>
+      <div class = "container">
+        <h4>{{project.projectName}}</h4>
+      </div>
+    </div>
+    <br>
+    <div class= "row container row">
+      <div class = "col-md-3">
+        <label><strong>Estimated Duration:</strong> </label>
+        <div class = "container">
+          <h6>{{project.estimatedDuration}} hours</h6>
+        </div>
+      </div>
+      <div class = "col-md-3">
+        <label><strong>Spent Time:</strong> </label>
+        <div class = "container">
+          <h6>{{project.currentSpentTime}} hours</h6>
+        </div>
+      </div>
+      <div class = "col-md-6">
+        <label><strong>Progress:</strong> </label>
+        <div class = "container row">
+          <div class="col-md-10 progress nopadding">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{'width': percent + '%'}"></div>
+          </div>
+          <div class = "col-md-2">
+            <h6>{{percent | number:'1.0-0'}}%</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    
+    <div>
+      <label><strong>User(s) Asigned:</strong> </label>
+      <div *ngIf="project.users; else noUser" >
+        <div class = "container col row" >
+          <div class = "col-md-2" *ngFor="let user of project.users">
+            <nb-user [name]="user.firstName" [picture]=""></nb-user>
+          </div>
+        </div>
+      </div>
+      <ng-template #noUser>
+        <div class = "container">
+          <h6 style = "color: red"> There are no assigned users for this project !!!</h6>
+        </div>
+      </ng-template>
+    </div>
+    <br>
+    <div>
+      <label><strong>Description:</strong> </label>
+      <div class = "container"> 
+        <p>{{project.description}}</p>
+      </div>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-md btn-primary" (click)="closeModal()">Ok</button>
+</div>

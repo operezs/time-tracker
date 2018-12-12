@@ -1,0 +1,22 @@
+@import '../../../@theme/styles/themes';
+@import '~@nebular/theme/styles/global/typography/typography';
+
+
+.title {
+  font-size: 1.30rem;
+  color: lightblue;
+}
+
+.value {
+    font-size: 1.30rem;
+    margin-top: 0.5rem;
+  }
+ 
+
+.float-right {
+    float: right;
+    }
+ 
+.div-block {
+    width: 100%;
+}    

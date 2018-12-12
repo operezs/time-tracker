@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <span>Payment Info</span>
+  </div>
+  <div class="modal-body">
+      <div><span>Salary Report in this month </span></div>
+    <br>
+    <div>
+      <table class = "table">
+        <tr>
+          <th>Project</th>
+          <th>Time</th> 
+          <th class = "float-right">Amount</th>
+        </tr>
+        <tr *ngFor="let project of projects; let i = index" >
+          <td>{{project.projectName}}</td>
+          <td>{{userMountWork[i] | number:'1.0-0'}}h</td>
+          <td class = "float-right">${{projectMountPay[i] | number:'1.0-0'}}</td>
+        </tr>
+        <tr>
+            <td><strong class = "title">Total:</strong></td>
+            <td><strong class = "value">{{timeLogged | number:'1.0-0'}}h</strong></td>
+            <td class = "float-right"><strong class = "value" style = "color: red" >${{userPay | number:'1.0-0'}}</strong></td>
+        </tr>
+      </table>
+    </div>
+    
+  </div>
+      
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-md btn-primary" (click)="closeModal()">Ok</button>
+</div>
