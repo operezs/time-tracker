@@ -14,8 +14,6 @@ import { ProjectService } from '../../../@core/data/project.service';
 import { Project } from '../../../@core/models/project';
 import { UserService } from '../../../@core/data/users.service';
 import { User } from '../../../@core/models/user';
-import { Role } from './../../../@core/models/role';
-import { UserRoleService } from '../../../@core/data/user-role.service';
 
 @Component({
   selector: 'ngx-report-list',
@@ -32,6 +30,10 @@ export class ReportListComponent implements OnInit {
   filters =  false;
   status = 'Show';
   admin = false;
+  user: User;
+  project: Project[];
+  
+  @Input() userInfoView: User;
   @Input() userInfo: boolean;
 
     // Date Piker
@@ -39,9 +41,7 @@ export class ReportListComponent implements OnInit {
     max: Date;
     rangeDate: any;
 
-  private project: Project[];
-  userList: User[];
-  userLog: User;
+  
 
   projectAssignedItems = [];
   dropdownProjectList = [];
@@ -74,7 +74,7 @@ export class ReportListComponent implements OnInit {
   settings = {
     hideSubHeader: true,
     actions: false,
-    noDataMessage: "Loading, please wait...",
+    noDataMessage: "There are no data related to your request ...",
 
     columns: {
       date: {
@@ -121,7 +121,7 @@ export class ReportListComponent implements OnInit {
           instance.delete.subscribe(report => {
             if (window.confirm('Are you sure you want to delete?')) {
               this.service.deleteReport(report.id).subscribe( data => {
-                this.getTableData();
+                this.dataFilter();
               });
             }
           });
@@ -141,7 +141,6 @@ export class ReportListComponent implements OnInit {
               private modalService: NgbModal,
               private projectService: ProjectService,
               private userService: UserService,
-              private roleService: UserRoleService,
               protected dateService: NbDateService<Date>) {
       this.min = this.dateService.addDay(this.dateService.today(), -5);
       this.max = this.dateService.addDay(this.dateService.today(), 5);
@@ -150,19 +149,21 @@ export class ReportListComponent implements OnInit {
   openAddReportModal() {
     const modal: NgbModalRef = this.modalService.open(AddReportComponent, { size: 'sm', container: 'nb-layout' });
     (<AddReportComponent>modal.componentInstance).titleForm = 'New Report';
-    (<AddReportComponent>modal.componentInstance).userLog = this.userLog;
+    (<AddReportComponent>modal.componentInstance).user = this.user;
+    (<AddReportComponent>modal.componentInstance).projects = this.project;
     (<AddReportComponent>modal.componentInstance).save.subscribe(data => {
-      this.getTableData();
+      this.dataFilter();
     });
   }
 
   editReport(report) {
     const modal: NgbModalRef = this.modalService.open(AddReportComponent, { size: 'sm', container: 'nb-layout' });
     (<AddReportComponent>modal.componentInstance).report = report;
+    (<AddReportComponent>modal.componentInstance).projects = this.project;
     (<AddReportComponent>modal.componentInstance).titleForm = 'Edit Report';
-    (<AddReportComponent>modal.componentInstance).userLog = this.userLog;
+    (<AddReportComponent>modal.componentInstance).user = this.user;
     (<AddReportComponent>modal.componentInstance).save.subscribe(data => {
-      this.getTableData();
+      this.dataFilter();
     });
   }
 
@@ -176,32 +177,62 @@ export class ReportListComponent implements OnInit {
   }
 
   getData() {
-    this.userService.getUsers().subscribe((users: Response<User[]>) => {
-      const userId = this.userService.getDecodedAccessToken().id;
-      this.userService.getUser(userId).subscribe((user: Response<User>) => {
-        this.userLog = user.data;
-        if (this.userLog.roleId)
-            this.roleService.getRole(this.userLog.roleId).subscribe((role: Response<Role>) => {
-              if (role.data.roleName === 'Admin')
-                  this.admin = true;
-            });
-        
-      });
-      const user2: User[] = [];
-      for (const user of users.data) {
-        if (!user.isDeleted)
-            user2.push(user);
-      }
-      this.userList = user2;
-      this.dropdownUserList = user2;
-      this.projectService.getProjects().subscribe((project: Response<Project[]>) => {
-           this.dropdownProjectList = project.data;
-           this.project = project.data;
-           this.getTableData();
-     });
-    });
-
+    if (!this.userInfo) {
+        const userId = this.userService.getDecodedAccessToken().id;
+            this.userService.getUser(userId).subscribe((user: Response<User>) => {
+              this.user = user.data;
+              this.userService.getUsers().subscribe((users: Response<User[]>) => {
+                this.dropdownUserList = users.data; 
+                });
+              this.getProjectList(this.user.id);  
+            });  
+        }
+    else {
+      this.user = this.userInfoView;
+      this.getProjectList(this.user.id);
+    }  
+    this.dataFilter();
   }
+
+  getProjectList(userid: string) {
+    const roleName = this.userService.getDecodedAccessToken().roleName;
+    if (roleName === 'Admin') {
+        this.admin = true;
+
+        this.projectService.getProjects().subscribe((project: Response<Project[]>) => {
+          this.dropdownProjectList = project.data;
+          this.project = project.data;   
+          }); 
+
+    } else {
+      this.projectService.getProjectsUser(userid).subscribe((projects: Response<Project[]>) => {
+        this.dropdownProjectList = projects.data;
+        this.project = projects.data;   
+        }); 
+    }
+  }
+
+  dataFilter() {
+    let projectId = ''; 
+    let userId = '';
+    let startDate: Date = null;
+    let endDate: Date = null;
+   
+    if (this.projectAssignedItems.length !== 0)
+        projectId = this.projectAssignedItems[0].id;
+   
+    if (this.userAssignedItems.length !== 0)        
+        userId = this.userAssignedItems[0].id;
+     
+    if (this.rangeDate) {
+      startDate = this.rangeDate.start;
+      endDate = this.rangeDate.end; 
+    }
+    if (!this.userInfo)
+           this.getTableData(startDate, endDate, projectId, userId);
+        else
+           this.getTableData(startDate, endDate, projectId, this.user.id);
+    }
 
   getTableData(startDate?: Date, endDate?: Date, projectId?: string, userId?: string) {
     this.service.getReports(startDate, endDate, projectId, userId)
@@ -216,30 +247,11 @@ export class ReportListComponent implements OnInit {
     for (let report of reports) {
         this.timeLoged = this.timeLoged + report.time;
     }
-
   }
 
   formatDate(date:string): string {
     return `${date.substring(8,10)}/${date.substring(5,7)}/${date.substring(0,4)}`;
-
   }
-  
-
-  dataFilter() {
-    /* let projectId = ''; 
-    let userId = '';
-    let startDate = new Date();
-    let endDate = new Date();
-
-   projectId = this.projectAssignedItems[0].id;
-    userId = this.userAssignedItems[0].id;
-    startDate = this.rangeDate.start;
-    endDate = this.rangeDate.end; 
-
-    this.getTableData(startDate, endDate, projectId, userId);
- */
-    alert('Filters: Not implemented yet');
-    }
 
     // projectMultiSelect
     onProjectSelect(item: any) {

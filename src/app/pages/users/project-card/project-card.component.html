@@ -18,13 +18,13 @@
     <nb-card-body>
 
       <ul class="user-activity-list">
-        <li  *ngFor="let project of projects; let i = index"
+        <li  *ngFor="let project of projects"
               (click)="projectInfo(project)">
                 
-          <div class="visited-date col-md-2">
+          <div class="visited-date col-md-3">
             {{ project.projectName }}
           </div>
-          <div class="visited-pages-count col-md-2">
+          <div class="visited-pages-count col-md-3">
             <div class="title">Estimated Duration</div>
             <div class="value">{{ project.estimatedDuration}}</div>
           </div>
@@ -32,13 +32,13 @@
               <div class="title">Spent Time</div>
               <div class="value">{{ project.currentSpentTime}}</div>
           </div>
-          <div class="visited-pages-count col-md-2">
+          <!-- <div class="visited-pages-count col-md-2">
               <div class="title">Spent Time for User </div>
               <div class="value">{{ spentTimeUser[i]}}</div>
-          </div>
+          </div> -->
           <div class="visited-pages-count col-md-2">
-              <div class="title">User Mount Work</div>
-              <div class="value">{{ userMountWork[i]}}</div>
+              <div class="title">Hours Worked/Month</div>
+              <div class="value">{{ userMonthWork.get(project.id)}}</div>
           </div>            
           <div class="visited-percentages col-md-2 float-right">
             <div class="title">Progress, %</div>

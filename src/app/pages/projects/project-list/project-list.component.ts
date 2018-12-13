@@ -29,7 +29,7 @@ export class ProjectListComponent implements OnInit {
   settings = {
     hideSubHeader: true,
     actions: false,
-    noDataMessage: "Loading, please wait...",
+    noDataMessage: "There are no data related to your request ...",
 
     columns: {
       projectName: {

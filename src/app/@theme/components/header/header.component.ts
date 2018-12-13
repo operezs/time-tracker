@@ -31,10 +31,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((users: Response<User[]>) => {
-      this.firstName = this.userService.getDecodedAccessToken().firstName;
-   });
-   this.menuService.onItemClick().subscribe(( event ) => {
+    this.firstName = this.userService.getDecodedAccessToken().firstName;
+    this.menuService.onItemClick().subscribe(( event ) => {
       this.onItemSelection(event.item.title);
    });
   }

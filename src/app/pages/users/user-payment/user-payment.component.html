@@ -11,15 +11,15 @@
           <th>Time</th> 
           <th class = "float-right">Amount</th>
         </tr>
-        <tr *ngFor="let project of projects; let i = index" >
+        <tr *ngFor="let project of projects" >
           <td>{{project.projectName}}</td>
-          <td>{{userMountWork[i] | number:'1.0-0'}}h</td>
-          <td class = "float-right">${{projectMountPay[i] | number:'1.0-0'}}</td>
+          <td>{{userMonthWork.get(project.id) | number:'1.1-2'}}h</td>
+          <td class = "float-right">${{projectMonthPay.get(project.id) | number:'1.1-2'}}</td>
         </tr>
         <tr>
             <td><strong class = "title">Total:</strong></td>
-            <td><strong class = "value">{{timeLogged | number:'1.0-0'}}h</strong></td>
-            <td class = "float-right"><strong class = "value" style = "color: red" >${{userPay | number:'1.0-0'}}</strong></td>
+            <td><strong class = "value">{{timeLogged | number:'1.1-2'}}h</strong></td>
+            <td class = "float-right"><strong class = "value" style = "color: red" >${{userPay | number:'1.1-2'}}</strong></td>
         </tr>
       </table>
     </div>

@@ -25,7 +25,7 @@ export class UserRoleComponent implements OnInit {
   settings = {
     hideSubHeader: true,
     actions: false,
-    noDataMessage: "Loading, please wait...",
+    noDataMessage: "There are no data related to your request ...",
 
     columns: {
       roleName: {
@@ -44,7 +44,7 @@ export class UserRoleComponent implements OnInit {
         filter: true,
       },
       payExtraHours: {
-        title: 'Pay Hours:',
+        title: 'Hours/Month',
         type: 'number',
         filter: true,
       },

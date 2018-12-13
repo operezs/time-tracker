@@ -33,10 +33,9 @@ export class ReportService {
     if (userId) {
       queryParams += queryParams.length > 0 ? '&' : '?';
       queryParams += `userId=${userId}`;
-    }
+    }    
 
     if (queryParams) {
-        console.log(queryParams);
         return this.http.get<Response<Report[]>>(`${this.baseUrl}${queryParams}`);
     }
     else
@@ -59,47 +58,6 @@ export class ReportService {
   deleteReport(id: string) {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
-
-/*
-  data: Report[] = [
-    new Report('Nick Jones', 'Cognoware', 150,
-               'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'),
-    new Report('Eva Moor', 'MoreSnaker', 250,
-               'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'),
-  ];
-
-  getData(): Observable<any> {
-    return observableOf(this.data);
-  }
-
-  getReports(): Observable<Report[]> {
-    return observableOf(this.data);
-  }
-
-  createReport(report: Report): Observable<Report[]> {
-    this.data.push(report);
-    return observableOf(this.data);
-  }
-
-  updateReport(report: Report): Observable<any> {
-    return observableOf(this.data);
-  }
-
-  deleteReport(userName: string): Observable<any> {
-    let index = -1;
-    for (let i = 0; i < this.data.length; i++) {
-      if (this.data[i].userName === userName) {
-        index = i;
-      }
-    }
-    if (index >= 0)
-      this.data.splice(index, 1);
-    return observableOf(this.data);
-  }
-
- */
-
-
 
 }
 

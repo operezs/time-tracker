@@ -15,8 +15,8 @@ export class UserPaymentComponent implements OnInit {
 
   user: User;
   role: Role;
-  userMountWork: number[];
-  projectMountPay: number[] = [];
+  userMonthWork = new Map();
+  projectMonthPay = new Map();
   projects: Project[] = [];
   timeLogged: number = 0;
   userPay: number = 0;
@@ -32,11 +32,13 @@ export class UserPaymentComponent implements OnInit {
   getTableData() {
     const payHours: number = this.role.basicSalary / this.role.payExtraHours; 
     let pay: number = 0;
-    for (let work of this.userMountWork) {
-         pay = work * payHours;
-         this.projectMountPay = [...this.projectMountPay, pay];
+    let workMonth = 0;
+    for (let project of this.projects) {
+         workMonth = this.userMonthWork.get(project.id);
+         pay = workMonth * payHours;
+         this.projectMonthPay.set(project.id, pay);
          this.userPay += pay;
-         this.timeLogged += work;
+         this.timeLogged += workMonth; 
     }
   }
    

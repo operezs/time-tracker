@@ -22,6 +22,11 @@ export class ProjectService {
     getProjects() {
       return this.http.get<Response<Project[]>>(this.baseUrl);
     }
+
+    getProjectsUser(userId: string){
+      return this.http.get<Response<Project[]>>(`${this.baseUrl}/users/${userId}`);
+    }
+
     getProject(id: string) {
       return this.http.get<Response<Project>>(`${this.baseUrl}/${id}`);
     }

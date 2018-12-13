@@ -9,7 +9,7 @@ import { UsersComponent } from './users/users/users.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { ReportListComponent } from './reports/report-list/report-list.component';
 import { UserRoleComponent } from './users/user-role/user-role.component';
-// import { AuthGuardAdmin } from './../@core/data/auth-guard-admin.service';
+import { AuthGuardAdmin } from './../@core/data/auth-guard-admin.service';
 
 
 
@@ -22,15 +22,15 @@ const routes: Routes = [{
       component: ReportListComponent,
     }, {
       path: 'users',
-     // canActivate: [AuthGuardAdmin],
+      canActivate: [AuthGuardAdmin],
       component: UsersComponent,
     }, {
       path: 'users/user-role',
-     // canActivate: [AuthGuardAdmin],
+      canActivate: [AuthGuardAdmin],
       component: UserRoleComponent,
     }, {
       path: 'projects',
-     // canActivate: [AuthGuardAdmin],
+      canActivate: [AuthGuardAdmin],
       component: ProjectListComponent,
     }, 
 

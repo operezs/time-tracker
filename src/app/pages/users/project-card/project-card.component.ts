@@ -17,8 +17,8 @@ export class ProjectCardComponent implements OnDestroy, OnInit {
   private alive = true;
 
   @Input() projects: Project[];
-  @Input() userMountWork: number[];
-  @Input() spentTimeUser: number[];
+  @Input() userMonthWork = new Map();
+  // @Input() spentTimeUser: number[];
 
   percent: number;
 
@@ -28,7 +28,6 @@ export class ProjectCardComponent implements OnDestroy, OnInit {
   currentTheme: string;
 
   constructor(private themeService: NbThemeService,
-              private userActivityService: UserActivityService,
               private modalService: NgbModal) {
     this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
@@ -38,15 +37,9 @@ export class ProjectCardComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.getUserActivity(this.type);
+    
   }
 
-  getUserActivity(period: string) {
-    this.userActivityService.getUserActivityData(period)
-      .subscribe(userActivityData => {
-        this.userActivity = userActivityData;
-      });
-  }
 
   progresPercent(spentTime: number, estimatedDuration: number) {
     return spentTime * 100 / estimatedDuration;

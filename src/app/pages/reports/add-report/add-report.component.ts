@@ -19,7 +19,8 @@ import { User } from '../../../@core/models/user';
 export class AddReportComponent implements OnInit {
 
   report: Report;
-  userLog: User;
+  user: User;
+  projects: Project[];
   project: Project;
   titleForm: string;
   userAssigned: {id, userName};
@@ -53,7 +54,7 @@ export class AddReportComponent implements OnInit {
     this.min = this.dateService.addDay(this.dateService.today(), -5);
     this.max = this.dateService.addDay(this.dateService.today(), 5);            
     if (!this.report) {
-      this.report = new Report( this.project , this.userLog, '');
+      this.report = new Report( this.project , this.user, '');
     }
   }
 
@@ -62,7 +63,7 @@ export class AddReportComponent implements OnInit {
     if (this.report.id) {
         this.userName = this.report.users.firstName;
     } else {
-        this.userName = this.userLog.firstName;
+        this.userName = this.user.firstName;
     }
   }
 
@@ -71,21 +72,16 @@ export class AddReportComponent implements OnInit {
   }
 
   getItemsDropdown() {
-      this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
-           this.dropdownList = projects.data;
-           if (this.report.projects)
-              this.projectAssignedItems = [this.report.projects];
-        });
+    this.dropdownList = this.projects;
+    if (this.report.projects)
+       this.projectAssignedItems = [this.report.projects];
   }
 
   reportAssignedMultiSelect() {
     if (this.projectAssignedItems.length !== 0) {
         this.report.projects = this.projectAssignedItems[0].id;
-
-    } else {
-       delete this.report.projects;
-      }
-    this.projectAssignedItems[0].id = this.userLog.id;
+    }
+    this.projectAssignedItems[0].id = this.user.id;
     this.report.users = this.projectAssignedItems[0].id;
   }
 
