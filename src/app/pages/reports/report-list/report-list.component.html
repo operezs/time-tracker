@@ -9,7 +9,7 @@
             <div class = "row " >
   
               <div class = "col-md-3">
-                  <ng-multiselect-dropdown
+                  <ng-multiselect-dropdown 
                           [placeholder]="'Select Project'"
                           [data]="dropdownProjectList"
                           [(ngModel)]="projectAssignedItems"
@@ -29,12 +29,20 @@
                   </ng-multiselect-dropdown>
               </div>
               <div class = "col-md-4" *ngIf="!userInfo" >
-                  <input nbInput 
-                         type="text"
-                         placeholder="Range of date" 
-                         [nbDatepicker]="rangepicker"
-                         name = "Range of date"
-                         [(ngModel)]="rangeDate" >
+                  <div class="input-group">
+                      <input nbInput 
+                             type="text"
+                             placeholder="Range of Date" 
+                             [nbDatepicker]="rangepicker"
+                             name = "Range of date"
+                             [(ngModel)]="rangeDate" >
+
+                      <span class="input-group-append">
+                        <button class="btn btn-info input-group-text" (click)="cleanRangeDate()" >
+                            <i class="ion-trash-a"></i>
+                        </button>
+                      </span>
+                    </div>
                   <nb-rangepicker #rangepicker></nb-rangepicker>
               </div>     
               <div class = "col-md-2">

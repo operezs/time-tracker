@@ -129,7 +129,7 @@ export class ReportListComponent implements OnInit {
             this.onView(report);
           });
         },
-        width: '14%',
+        width: '10%',
       },
     },
   };
@@ -251,6 +251,10 @@ export class ReportListComponent implements OnInit {
 
   formatDate(date:string): string {
     return `${date.substring(8,10)}/${date.substring(5,7)}/${date.substring(0,4)}`;
+  }
+
+  cleanRangeDate() {
+   this.rangeDate = '';
   }
 
     // projectMultiSelect

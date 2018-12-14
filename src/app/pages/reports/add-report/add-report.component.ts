@@ -23,7 +23,7 @@ export class AddReportComponent implements OnInit {
   projects: Project[];
   project: Project;
   titleForm: string;
-  userAssigned: {id, userName};
+  
 
   projectAssignedItems = [];
   dropdownList = [];
@@ -78,22 +78,22 @@ export class AddReportComponent implements OnInit {
   }
 
   reportAssignedMultiSelect() {
-    if (this.projectAssignedItems.length !== 0) {
         this.report.projects = this.projectAssignedItems[0].id;
-    }
-    this.projectAssignedItems[0].id = this.user.id;
-    this.report.users = this.projectAssignedItems[0].id;
   }
 
   onSubmit() {
     this.reportAssignedMultiSelect();
     this.report.date = this.reportDate;
     if (this.report.id) {
+        this.projectAssignedItems[0].id = this.report.users.id;
+        this.report.users = this.projectAssignedItems[0].id; 
         this.reportService.updateReport(this.report).subscribe( data => {
         this.closeModal();
         this.onSave();
       });
     } else {
+        this.projectAssignedItems[0].id = this.user.id;
+        this.report.users = this.projectAssignedItems[0].id; 
         this.reportService.createReport(this.report).subscribe( data => {
         this.closeModal();
         this.onSave();
