@@ -1,0 +1,69 @@
+<nb-card class="animated fadeIn fast">
+  <nb-card-header>
+    <div>Expenses List</div>
+    <br>
+         <div class = "row">
+
+    
+          <div class = "col-md-10">
+            <div class = "row " >
+  
+              <div class = "col-md-3" *ngIf="admin && !userInfo" >
+                  <ng-multiselect-dropdown
+                          [placeholder]="'Select User'"
+                          [data]="dropdownUserList"
+                          [(ngModel)]="userAssignedItems"
+                          name="userAssignedItems"
+                          [settings]="dropdownUserSettings"
+                          (onSelect)="onUserSelect($event)">        
+                  </ng-multiselect-dropdown>
+              </div>
+              <div class = "col-md-4" *ngIf="!userInfo" >
+                  <div class="input-group">
+                      <input nbInput 
+                             type="text"
+                             placeholder="Range of Date" 
+                             [nbDatepicker]="rangepicker"
+                             name = "Range of date"
+                             [(ngModel)]="rangeDate" >
+
+                      <span class="input-group-append">
+                        <button class="btn btn-info input-group-text" (click)="cleanRangeDate()" >
+                            <i class="ion-trash-a"></i>
+                        </button>
+                      </span>
+                    </div>
+                  <nb-rangepicker #rangepicker></nb-rangepicker>
+              </div>     
+              <div class = "col-md-2">
+                  <button type="button" 
+                          class="btn btn-success" 
+                          (click)="dataFilter()">
+                          Filter
+                  </button>
+              </div>
+  
+            </div>
+          </div>
+          
+          <div class="col-md-2" *ngIf="!userInfo">
+              <button type="button" style = "float: right" 
+                      class="btn btn-primary d-flex" 
+                      (click)="openAddExpensesModal()">
+                Add New
+                <i class="ion-plus-round"></i>
+              </button>
+          </div>
+
+          </div>
+
+  </nb-card-header>
+
+  <nb-card-body>    
+    <ng2-smart-table [settings]="settings" [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+  <nb-card-footer>
+    <strong>Total time logged: </strong> {{timeLoged}} hours
+  </nb-card-footer>
+</nb-card>

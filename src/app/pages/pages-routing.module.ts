@@ -9,6 +9,7 @@ import { UsersComponent } from './users/users/users.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { ReportListComponent } from './reports/report-list/report-list.component';
 import { UserRoleComponent } from './users/user-role/user-role.component';
+import { ExpensesListComponent } from './expenses/expenses-list/expenses-list.component';
 import { AuthGuardAdmin } from './../@core/data/auth-guard-admin.service';
 
 
@@ -32,6 +33,9 @@ const routes: Routes = [{
       path: 'projects',
       canActivate: [AuthGuardAdmin],
       component: ProjectListComponent,
+    }, {
+      path: 'expenses',
+      component: ExpensesListComponent,
     }, 
 
 

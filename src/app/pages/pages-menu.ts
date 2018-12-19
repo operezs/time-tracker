@@ -28,6 +28,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'ion-settings',
     link: '/pages/projects',
   },
+  {
+    title: 'Other expenses',
+    icon: 'ion-social-usd',
+    link: '/pages/expenses',
+  },
 /*   {
     title: 'E-commerce',
     icon: 'nb-e-commerce',

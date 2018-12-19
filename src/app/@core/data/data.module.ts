@@ -23,8 +23,9 @@ import { LayoutService } from './layout.service';
 import { GlobalService } from './global.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthGuardAdmin } from './auth-guard-admin.service';
-import { ReportService } from './report.service';
 import { UserService } from './users.service';
+import { ReportService } from './report.service';
+import { ExpensesService } from './expenses.service';
 
 const SERVICES = [
   UserThemeService,
@@ -51,6 +52,7 @@ const SERVICES = [
   ReportService,
   UserRoleService,
   UserService,
+  ExpensesService,
 
 ];
 

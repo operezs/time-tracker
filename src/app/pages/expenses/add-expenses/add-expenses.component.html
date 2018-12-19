@@ -1,0 +1,77 @@
+<div class="modal-header">
+  <span>Add Report Set</span>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="onSubmit()" #addReportForm="ngForm">
+     <div>
+        <label for="userName">Name:</label>
+         <div class = "container">
+           <h4>{{userName}}</h4>
+         </div>
+     </div>
+      <br>
+
+    <div class = "row">
+      <div class=" col-md-5 form-group">
+          <label for="time">Time:</label>
+          <div>
+            <input placeholder="Time in hores" 
+                   type="number" 
+                   class="form-control" 
+                   id="time" 
+                   name="time" 
+                   [(ngModel)]="report.time"
+                   required>
+          </div>
+        </div>
+
+      <div class="col-md-7 form-group">
+          <label for="date">Date:</label>
+          <div>
+            <input  class="form-control"  
+                    placeholder="Date report"
+                    [nbDatepicker]="formpicker"
+                    name = "Date report"
+                    [(ngModel)]="reportDate"
+                    required>
+          </div>
+          <nb-datepicker class="show-front" #formpicker></nb-datepicker>
+      </div>  
+    </div>
+    <br>
+    <div>    
+      <label for="projectName">Project Name:</label>
+      <div>
+        <ng-multiselect-dropdown
+                class="form-control"
+                [placeholder]="'Select Project'"
+                [data]="dropdownList"
+                [(ngModel)]="projectAssignedItems"
+                name="projectAssignedItems"
+                [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"
+                required>        
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <div>
+        <textarea type="text" 
+                  class="form-control" 
+                  id="description" 
+                  name="description" 
+                  [(ngModel)]="report.description"
+                  required>
+        </textarea>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-md btn-success" [disabled]="!addReportForm.valid">Save</button>
+        <button type="button" class="btn btn-md btn-primary" (click)="closeModal()" >Close</button>
+    </div>
+    <!--button type="submit" class="btn btn-danger">Submit</button-->
+  </form>
+</div>

@@ -1,0 +1,120 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+
+
+
+:host >>> ng-multiselect-dropdown > div.multiselect-dropdown[_ngcontent-c15] > div[_ngcontent-c15] > span.dropdown-btn[_ngcontent-c15] {
+  padding: 0px !important;
+  border: none !important;
+ }
+
+ :host >>> ng-multiselect-dropdown > div.multiselect-dropdown > div > span.dropdown-btn {
+  padding: 0px !important;
+  border: none !important;
+ }
+ .multiselect-parent .dropdown-btn {
+  width: 300px;
+}
+ @include ng-install-component() {
+  :host >>> ng-multiselect-dropdown > div.multiselect-dropdown > div > span.dropdown-btn {
+    padding: 0px !important;
+    border: none !important;
+   }
+
+  ng-multiselect-dropdown {
+    padding: 0px !important;
+    border: none !important;   
+  }
+ }
+ 
+
+@include nb-install-component() {
+
+  
+
+  nb-card-body {
+    overflow: visible;
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+
+  
+  .full-name-inputs {
+    display: flex;
+  }
+
+  .input-group.has-person-icon {
+    position: relative;
+
+    .form-control {
+
+      padding-left: 3rem;
+    }
+
+    &::before {
+      content: '\F47D';
+      font-family: 'Ionicons';
+      font-size: 2rem;
+      position: absolute;
+      z-index: 100;
+      left: 1rem;
+      top: 0.25rem;
+    }
+  }
+
+
+  .form-group label {
+    padding: 0 0 0.75rem;
+  }
+
+
+.input-description {
+    font-size: 70%;
+    align-content: flex-end;
+}
+
+
+@include nb-install-component() {
+  nb-card-body {
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+
+  .fast {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fadeIn {
+    animation-name: fadeIn;
+  }
