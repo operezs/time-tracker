@@ -1,15 +1,46 @@
 <nb-card>
   <nb-card-header>
-    <button class = "btn btn-outline btn-info" 
-            (click)="goBack()">
-      <i class="ion-arrow-left-c"></i>
-       {{user.firstName}}
-    </button>
+       <div class = "row">
+            <div class = "col-md-4">
+              <button class = "btn btn-outline btn-info" 
+                     (click)="goBack()">
+                <i class="ion-arrow-left-c"></i>
+                   {{user.firstName}}
+              </button>
+            </div>
+            
+            <div class = "col-md-6">
+                  <div class="input-group">
+                    <input nbInput 
+                           type="text"
+                           placeholder="Range of Date" 
+                           [nbDatepicker]="rangepicker"
+                           name = "Range of date"
+                           [(ngModel)]="rangeDate" >
+              
+                    <span class="input-group-append">
+                      <button class="btn btn-info input-group-text" (click)="cleanRangeDate()" >
+                          <i class="ion-trash-a"></i>
+                      </button>
+                      <button type="button" 
+                            class="btn btn-success" 
+                            (click)="dataFilter()">
+                            Filter
+                      </button>
+                    </span>
+                  </div>
+                  <nb-rangepicker #rangepicker></nb-rangepicker>
+            </div>
+                 
+            
+          <div class = "col-md-2">
+            <button  class = "btn btn-outline btn-primary float-right " 
+                    (click)="openPaymentModal()">
+                View Payment
+            </button>
+          </div>
+       </div>
 
-    <button  class = "btn btn-outline btn-success float-right " 
-            (click)="openPaymentModal()">
-        View Payment
-    </button>
   </nb-card-header>
 
   <nb-card-body>        
@@ -26,4 +57,8 @@
                   [userMonthWork] = "userMonthWork">
 </ngx-project-card>
 
-<ngx-report-list [userInfo] = "userInfo" [userInfoView] = "user"></ngx-report-list>
+<ngx-report-list [userInfo] = "userInfo" 
+                 [userInfoView] = "user"
+                 [startDate] = "startDate"
+                 [endDate] = "endDate">
+</ngx-report-list>

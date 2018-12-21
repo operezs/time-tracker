@@ -8,6 +8,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ThemeModule } from '../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {DpDatePickerModule} from 'ng2-date-picker';
+
+
 
 
 import { UsersComponent } from './users/users.component';
@@ -40,6 +43,7 @@ import { ProjectCardComponent } from './project-card/project-card.component';
     Ng2SmartTableModule,
     NgMultiSelectDropDownModule,
     ReportsModule,
+    DpDatePickerModule,
 
   ],
   declarations: [

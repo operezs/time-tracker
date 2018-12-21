@@ -23,6 +23,7 @@ export class UserPaymentComponent implements OnInit {
   date: string;
 
 
+
   constructor(private activeModal: NgbActiveModal) { }
 
   ngOnInit() {

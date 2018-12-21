@@ -36,6 +36,10 @@ export class ReportListComponent implements OnInit {
   @Input() userInfoView: User;
   @Input() userInfo: boolean;
 
+  @Input() startDate: Date;
+  @Input() endDate: Date;
+
+
     // Date Piker
     min: Date;
     max: Date;
@@ -81,6 +85,8 @@ export class ReportListComponent implements OnInit {
         title: 'Date',
         type: 'string',
         filter: true,
+        sort: true,
+        sortDirection: 'desc',
         valuePrepareFunction: (value) => {
           let date = this.formatDate(value);
           return  date;
@@ -230,8 +236,9 @@ export class ReportListComponent implements OnInit {
     }
     if (!this.userInfo)
            this.getTableData(startDate, endDate, projectId, userId);
-        else
-           this.getTableData(startDate, endDate, projectId, this.user.id);
+        else {  
+           this.getTableData(this.startDate, this.endDate, projectId, this.user.id);
+        }
     }
 
   getTableData(startDate?: Date, endDate?: Date, projectId?: string, userId?: string) {
@@ -254,8 +261,8 @@ export class ReportListComponent implements OnInit {
   }
 
   cleanRangeDate() {
-   this.rangeDate = '';
-  }
+    this.rangeDate = '';
+   }
 
     // projectMultiSelect
     onProjectSelect(item: any) {

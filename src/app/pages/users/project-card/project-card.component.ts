@@ -26,6 +26,8 @@ export class ProjectCardComponent implements OnDestroy, OnInit {
   type = 'month';
   types = ['week', 'month', 'year'];
   currentTheme: string;
+  rangeDate: any;
+  
 
   constructor(private themeService: NbThemeService,
               private modalService: NgbModal) {
@@ -49,6 +51,10 @@ export class ProjectCardComponent implements OnDestroy, OnInit {
     const modal: NgbModalRef = this.modalService.open(ProjectInfoComponent, { size: 'lg', container: 'nb-layout' });
     (<ProjectInfoComponent>modal.componentInstance).project = project;
   }
+
+  cleanRangeDate() {
+    this.rangeDate = '';
+   }
 
   ngOnDestroy() {
     this.alive = false;
