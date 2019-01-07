@@ -1,0 +1,35 @@
+<nb-card-header>
+  <div class="header-container">
+    <!-- <div class="icon">
+      <i class="nb-person"></i>
+    </div> -->
+    <span>My Account</span>
+  </div>
+</nb-card-header>
+<nb-card-body>
+    <div *ngIf="user" class = "container"> 
+            <div class = "container">
+                <label>
+                    <i class="nb-person icon-size"></i>
+                    <strong class = "title"> First name:  </strong> 
+                    <strong class = "value">{{user.firstName}}</strong>
+                </label>
+            </div>
+            <br>
+            <div class = "container">
+                <label>
+                    <i class="nb-person icon-size"></i>
+                    <strong class = "title"> Last name:  </strong>
+                    <strong class = "value">{{user.lastName}}</strong>
+                </label>
+            </div>
+            <br>            
+            <div class = "container">
+                <label>
+                    <i class="nb-email icon-size"></i>
+                    <strong class = "title"> e-Mail:  </strong> 
+                    <strong class = "value">{{user.email}}</strong>
+                </label>
+            </div>
+    </div>
+</nb-card-body>

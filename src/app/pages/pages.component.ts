@@ -27,8 +27,7 @@ export class PagesComponent {
     if (this.role === 'Admin') {
         this.menu = MENU_ITEMS;
     } else {
-        const item = MENU_ITEMS[1];
-        this.menu = [...this.menu, item];
+        this.menu = [...this.menu,MENU_ITEMS[0],MENU_ITEMS[1], MENU_ITEMS[2],MENU_ITEMS[4]];
       } 
   }
 

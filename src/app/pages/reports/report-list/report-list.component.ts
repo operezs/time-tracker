@@ -245,7 +245,7 @@ export class ReportListComponent implements OnInit {
     this.service.getReports(startDate, endDate, projectId, userId)
                 .subscribe((reports: Response<Report[]>) => {
       this.source.load(reports.data);
-      this.calcTotalTime(reports.data);  
+      this.calcTotalTime(reports.data);     
     });
   }
 

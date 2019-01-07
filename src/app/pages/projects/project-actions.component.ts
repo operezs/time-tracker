@@ -1,15 +1,21 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { UserService } from '../../@core/data/users.service';
 
 @Component({
+  styles: ['./project.component.scss',
+  `
+    right-possition{display: contents;}
+
+  `],
   template: `
-  <div class="row">
-    <div class="col-md-3">
+  <div class="row" >
+    <div class="col-md-3" *ngIf="admin">
       <nb-action icon="fas fa-edit" (click)="onEdit()"></nb-action>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3" *ngIf="admin">
       <nb-action icon="fas fa-trash" (click)="onDelete()"></nb-action>
     </div>
-    <div class="col-md-3">
+    <div [ngClass]="{'col-md-3' : admin, 'container': !admin}">
       <nb-action icon="fas fa-eye" (click)="onView()"></nb-action>
     </div>
   </div>
@@ -23,9 +29,16 @@ export class ProjectActionsComponent implements OnInit {
   @Output() view = new EventEmitter();
   // @Output() generate = new EventEmitter();
 
-  constructor() {}
+  admin = false;
 
-  ngOnInit() {}
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    const roleName = this.userService.getDecodedAccessToken().roleName;
+    if (roleName === 'Admin') {
+        this.admin = true;
+      }
+  }
 
   onEdit() {
     this.edit.emit(this.rowData);

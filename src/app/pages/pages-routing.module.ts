@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
-// import { ECommerceComponent } from './e-commerce/e-commerce.component';
+import { TrackerHomeComponent } from './tracker-home/tracker-home.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { UsersComponent } from './users/users/users.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
@@ -18,6 +18,10 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
+      path: 'home',
+      component: TrackerHomeComponent,
+    },
+    {
       path: 'reports',
       component: ReportListComponent,
     }, {
@@ -30,13 +34,13 @@ const routes: Routes = [{
       component: UserRoleComponent,
     }, {
       path: 'projects',
-      canActivate: [AuthGuardAdmin],
+      // canActivate: [AuthGuardAdmin],
       component: ProjectListComponent,
     }, 
 
 
     // theme  
-/*   {
+  /* {
     path: 'dashboard',
     component: ECommerceComponent,
   }, {
@@ -74,7 +78,7 @@ const routes: Routes = [{
     loadChildren: './miscellaneous/miscellaneous.module#MiscellaneousModule',
   }, */ {
     path: '',
-    redirectTo: 'reports',
+    redirectTo: 'home',
     pathMatch: 'full',
   }, /* {
     path: '**',

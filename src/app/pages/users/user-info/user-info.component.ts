@@ -81,17 +81,10 @@ export class UserInfoComponent implements OnInit {
       for (let report of this.reports) {
           if ( !this.projectReportId.has(report.projects.id)) {
               this.projectReportId.add(report.projects.id);
+              this.projects.push(report.projects);
             }
         }
-     
-      this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
-          for (let project of projects.data) {
-            if (this.projectReportId.has(project.id)) {
-                this.projects.push(project);               
-                }
-              }
-        this.getSpentTime();   
-      });  
+      this.getSpentTime();   
     });
   }
 

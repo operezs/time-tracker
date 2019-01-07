@@ -2,14 +2,19 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
+    title: 'Home',
+    icon: 'nb-home',
+    link: '/pages/home',
+    home: true,
+  },
+  {
     title: 'OPTIONS',
     group: true,
   },
   {
     title: 'Reports',
     icon: 'nb-compose',
-    link: '/pages/reports',
-    home: true,    
+    link: '/pages/reports',    
   },
   {
     title: 'Users',
@@ -28,7 +33,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'ion-settings',
     link: '/pages/projects',
   },
-/*   {
+
+   /*{
     title: 'E-commerce',
     icon: 'nb-e-commerce',
     link: '/pages/dashboard',

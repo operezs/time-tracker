@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-xxl-5">
+    <div class="row">
+      <div class="col-md-6">
+        <ngx-profile-card [user] = "user" [role] = "role"></ngx-profile-card>
+      </div>
+      <div class="col-md-6">
+        <ngx-soldev-card [userAdmin] = "userAdmin" [userid] = "userid"></ngx-soldev-card>
+      </div>
+    </div>
+
+    <ngx-project-activity  [projects] = "projects"></ngx-project-activity>
+  </div>
+
+  <!-- <div class="col-xxl-7">
+    <ngx-tracker-home-charts></ngx-tracker-home-charts>
+  </div> -->
+</div>
+
+<div class="row">
+
+  <div *ngIf="userAdmin"  
+        class="col-xxl-3">
+    <ngx-user-activity></ngx-user-activity>
+  </div>
+
+  <!-- <div class="col-xxl-9">
+    <ngx-tracker-home-visitors-analytics></ngx-tracker-home-visitors-analytics>
+  </div> -->
+</div>

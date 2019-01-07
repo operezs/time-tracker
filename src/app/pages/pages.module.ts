@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 
 // import { DashboardModule } from './dashboard/dashboard.module';
-// import { ECommerceModule } from './e-commerce/e-commerce.module';
+import { TrackerHomeModule } from './tracker-home/tracker-home.module';
 // import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 
 import { PagesRoutingModule } from './pages-routing.module';
@@ -23,7 +23,7 @@ const PAGES_COMPONENTS = [
     ThemeModule,
     FormsModule,
    // DashboardModule,
-   // ECommerceModule,
+   TrackerHomeModule,
    // MiscellaneousModule,
     UsersModule,
     ProjectsModule,

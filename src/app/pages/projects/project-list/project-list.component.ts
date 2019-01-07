@@ -25,6 +25,8 @@ import { User } from '../../../@core/models/user';
 export class ProjectListComponent implements OnInit {
   usersList: User[];
   userAsigned: string[] = [];
+  admin = false;
+  userid: string;
 
   settings = {
     hideSubHeader: true,
@@ -55,11 +57,9 @@ export class ProjectListComponent implements OnInit {
           if (value) {
             for (const val of value) {
               chip =  `${chip}
-                  <div class = "row">
-                    <div class = "container">
+                    <span class = "badge badge-info">
                        ${val.firstName}
-                    </div>
-                  </div>
+                    </span>
                 `;
               }
             return chip;
@@ -84,7 +84,7 @@ export class ProjectListComponent implements OnInit {
           });
           instance.delete.subscribe(project => {
             if (window.confirm('Are you sure you want to delete?')) {
-              this.service.deleteProject(project.id).subscribe(data => {
+              this.projectService.deleteProject(project.id).subscribe(data => {
                 this.getTableData();
               });
             }
@@ -101,7 +101,7 @@ export class ProjectListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   @Output() projectSelected = new EventEmitter();
 
-  constructor(private service: ProjectService,
+  constructor(private projectService: ProjectService,
               private modalService: NgbModal,
               private userService: UserService) {
   }
@@ -142,9 +142,20 @@ export class ProjectListComponent implements OnInit {
 
 
   getTableData() {
-    this.service.getProjects().subscribe((projects: Response<Project[]>) => {
+    const roleName = this.userService.getDecodedAccessToken().roleName;
+    this.userid = this.userService.getDecodedAccessToken().id;
+    if (roleName === 'Admin') {
+        this.admin = true;
+        this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
+          this.source.load(projects.data);
+          });
+      }
+    else {
+      this.projectService.getProjectsUser(this.userid).subscribe((projects: Response<Project[]>) => {
         this.source.load(projects.data);
-      });
+        }); 
+    }  
   }
 
 }
+

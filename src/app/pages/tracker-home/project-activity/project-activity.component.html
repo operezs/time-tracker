@@ -1,0 +1,32 @@
+<nb-card size="size">
+    <nb-card-header>
+      <span>Project Activity</span>
+    </nb-card-header>
+    <nb-card-body>
+      <ul class="user-activity-list">
+        <li *ngFor="let project of projects"
+              (click)="projectInfo(project)">
+          <div class="visited-date col-md-3">
+            {{ project.projectName }}
+          </div>
+
+          <div class="visited-pages-count col-md-3">
+            <div class="title">Estimated Duration</div>
+            <div class="value">{{ project.estimatedDuration }}</div>
+          </div>
+
+          <div class="visited-pages-count col-md-3">
+            <div class="title">Spent Time</div>
+            <div class="value">{{ project.currentSpentTime }}</div>
+          </div>
+
+          <div class="visited-percentages">
+            <div class="title">Progress, %</div>
+            <div class="delta value">
+              {{  progresPercent(project.currentSpentTime, project.estimatedDuration ) | number:'1.0-0' }}%    
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nb-card-body>
+  </nb-card>

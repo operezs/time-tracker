@@ -1,0 +1,82 @@
+@import '../../../../@theme/styles/themes';
+@import '~@nebular/theme/styles/global/typography/typography';
+
+@include nb-install-component() {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  nb-card-header {
+    flex-direction: row;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+  }
+
+  .dropdown {
+    min-width: 8.125rem;
+  }
+
+  nb-card-body {
+    padding: 1rem 0 0;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .margin-top-40 {
+    margin-top: 40px;
+  }
+  .visitors-value {
+    font-size: 3rem;
+    font-weight: 400;
+    color: nb-theme(color-fg-heading);
+    line-height: 0.8;
+  }
+
+  .visitors-title {
+    font-size: 1.25rem;
+    color: nb-theme(color-fg);
+  }
+
+  .visitors-statistics {
+    width: 100%;
+  }
+
+  .statistics-chart {
+    /* margin-top: 3.5rem; */
+    margin-bottom: 1rem;
+    width: 100%;
+
+    .echart {
+      display: block;
+      height: 150px;
+      width: 100%;
+    }
+  }
+
+  .chart-values {
+    display: flex;
+  }
+
+  .chart-value {
+    color: nb-theme(color-fg-heading);
+    font-size: 2rem;
+    font-weight: 300;
+    flex: 1;
+  }
+
+  // legend start
+  .visitors-statistics-legend {
+    /deep/ .legends {
+      padding: 0;
+      margin-left: 0;
+    }
+
+    /deep/ .legend {
+      flex: 1;
+      margin-left: 0;
+      justify-content: flex-start;
+    }
+  }
+  // legend end
+}
+

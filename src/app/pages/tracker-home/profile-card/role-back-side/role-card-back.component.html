@@ -1,0 +1,60 @@
+<nb-card-header>
+  <div class="header-container">
+    <div class="icon">
+      <i class="ion-social-usd"></i>
+    </div>
+    <span> My Role</span>
+  </div>
+</nb-card-header>
+<nb-card-body>
+  <div *ngIf="role" class = "container"> 
+
+       <div class = "row">
+         <div class = "col-md-6">
+            <div class = "container">
+              <label>
+                  <i class="nb-gear icon-size"></i>
+                  <strong class = "title"> Role:  </strong> 
+                  <strong class = "value">{{role.roleName}}</strong>
+              </label>
+            </div>
+            <br>
+            <div class = "container">
+              <label>
+                  <i class="nb-compose icon-size"></i>                        
+                  <strong class = "title"> Work mode:  </strong>
+                  <strong class = "value">{{role.workMode}}</strong>
+              </label> 
+            </div>          
+            <br>
+            <div class = "container">
+              <label>
+                  <i class="nb-coffee-maker icon-size"></i>                        
+                  <strong class = "title"> Basic salary:  </strong>
+                  <strong class = "value">{{role.basicSalary}}</strong>                    
+              </label>
+            </div>
+         </div>
+         <div class = "col-md-6">
+          <div class = "container">
+            <label>
+                <i class="nb-gear icon-size"></i>
+                <strong class = "title"> Hours/Month:  </strong> 
+                <strong class = "value">{{role.payExtraHours}}h</strong>
+            </label>
+          </div>
+          <br>
+          <div class = "container">
+            <label>
+                <i class="nb-compose icon-size"></i>                        
+                <strong class = "title"> Pay/Hours:  </strong>
+                <strong class = "value">
+                  {{paymentHour(role.basicSalary, role.payExtraHours ) | number:'1.1-2' }}h
+                </strong>
+            </label> 
+          </div>          
+          
+       </div>
+       </div>
+  </div>  
+</nb-card-body>

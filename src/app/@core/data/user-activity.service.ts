@@ -39,6 +39,7 @@ export class UserActivityService {
     const date = new Date();
     const days = date.getDate();
     const month = this.periods.getMonths()[date.getMonth()];
+    
 
     return Array.from(Array(days)).map((_, index) => {
       return {
