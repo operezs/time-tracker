@@ -1,16 +1,18 @@
 <nb-card-header>
-    Solution Developeurs
+    <div class="header-container">
+        <span> Solution Développeurs</span>
+    </div>
 </nb-card-header>
 <nb-card-body>
     <div class = "container">
         <div class = "row">
-          <div class = " container col-md-6 statistics-header">
-            <div class = "visitors-title">Projects</div>
+          <div class = " container col-md-6 pading-left-40 statistics-header">
+            <div class = "visitors-title">Projects:</div>
             <div class = "visitors-value text-center">{{countProject}}</div>
             <div class = "margin-top-40">
                 <div class="chart-values">
                   <span class="chart-value">{{value}}%</span>
-                  <span class="chart-value">{{falta}}%</span>
+                  <span class="chart-value">{{lack}}%</span>
                 </div>
                 <ngx-legend-chart class="visitors-statistics-legend" [legendItems]="chartLegend"></ngx-legend-chart>
             </div>

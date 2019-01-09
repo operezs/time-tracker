@@ -20,6 +20,7 @@ export class TrackerHomeComponent {
   @Output() userAdmin: boolean = false;
   
   userid: string;
+  spinner = true;
 
 constructor(  private projectService: ProjectService,
               private roleService: UserRoleService,
@@ -44,11 +45,15 @@ constructor(  private projectService: ProjectService,
       {this.userAdmin = true;        
         this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
           this.projects = projects.data;
+          this.spinner = false;
+
           });
       }
     else {
       this.projectService.getProjectsUser(this.userid).subscribe((projects: Response<Project[]>) => {
         this.projects = projects.data;
+        this.spinner = false;
+
         }); 
     } 
   }

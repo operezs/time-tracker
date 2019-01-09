@@ -23,6 +23,8 @@ import { User } from '../../../@core/models/user';
   `],
 })
 export class ProjectListComponent implements OnInit {
+
+  spinner = true;
   usersList: User[];
   userAsigned: string[] = [];
   admin = false;
@@ -148,11 +150,13 @@ export class ProjectListComponent implements OnInit {
         this.admin = true;
         this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
           this.source.load(projects.data);
+          this.spinner = false;
           });
       }
     else {
       this.projectService.getProjectsUser(this.userid).subscribe((projects: Response<Project[]>) => {
         this.source.load(projects.data);
+        this.spinner = false;
         }); 
     }  
   }

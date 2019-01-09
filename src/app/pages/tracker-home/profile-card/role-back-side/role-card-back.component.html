@@ -1,8 +1,5 @@
 <nb-card-header>
   <div class="header-container">
-    <div class="icon">
-      <i class="ion-social-usd"></i>
-    </div>
     <span> My Role</span>
   </div>
 </nb-card-header>
@@ -38,7 +35,7 @@
          <div class = "col-md-6">
           <div class = "container">
             <label>
-                <i class="nb-gear icon-size"></i>
+                <i class="nb-bar-chart icon-size"></i>
                 <strong class = "title"> Hours/Month:  </strong> 
                 <strong class = "value">{{role.payExtraHours}}h</strong>
             </label>
@@ -46,10 +43,10 @@
           <br>
           <div class = "container">
             <label>
-                <i class="nb-compose icon-size"></i>                        
+                <i class="nb-lightbulb icon-size"></i>                        
                 <strong class = "title"> Pay/Hours:  </strong>
                 <strong class = "value">
-                  {{paymentHour(role.basicSalary, role.payExtraHours ) | number:'1.1-2' }}h
+                  $ {{paymentHour(role.basicSalary, role.payExtraHours ) | number:'1.1-2' }}
                 </strong>
             </label> 
           </div>          

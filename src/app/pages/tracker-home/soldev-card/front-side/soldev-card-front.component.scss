@@ -1,32 +1,54 @@
 @import '../../../../@theme/styles/themes';
 @import '~@nebular/theme/styles/global/typography/typography';
 
+
 @include nb-install-component() {
   display: flex;
   flex-direction: column;
   flex: 1;
 
-  nb-card-header {
-    flex-direction: row;
-    padding-top: 0.45rem;
-    padding-bottom: 0.45rem;
+  /deep/ nb-card-header {
+    display: flex;
+    justify-content: space-between;
+
+    .header-container {
+      display: flex;
+      @include nb-rtl(flex-direction, row-reverse);
+    }
+
+    .title {
+      padding-left: 1rem;
+    }
+  }
+
+  .header-container {
+    display: flex;
+    @include nb-rtl(flex-direction, row-reverse);
   }
 
   .dropdown {
     min-width: 8.125rem;
   }
 
-  nb-card-body {
-    padding: 1rem 0 0;
-    flex-direction: column;
+  
+  /deep/ nb-card-body {
+    display: flex;
+    position: relative;
     flex: 1;
+    padding: 0;
+    overflow: hidden;
   }
 
   .margin-top-40 {
     margin-top: 40px;
   }
+
+  .pading-left-40 {
+    padding-left: 40px;
+  }
+  
   .visitors-value {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 400;
     color: nb-theme(color-fg-heading);
     line-height: 0.8;
@@ -59,7 +81,7 @@
 
   .chart-value {
     color: nb-theme(color-fg-heading);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 300;
     flex: 1;
   }

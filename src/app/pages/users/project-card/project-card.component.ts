@@ -5,7 +5,7 @@ import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Project } from './../../../@core/models/project';
 
 import { ProjectInfoComponent } from './../../projects/project-info/project-info.component';
-import { UserActivityService, UserActive } from '../../../@core/data/user-activity.service';
+import { UserActive } from '../../../@core/data/user-activity.service';
 
 @Component({
   selector: 'ngx-project-card',

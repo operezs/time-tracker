@@ -17,7 +17,7 @@ export class SoldevCardFrontComponent implements OnDestroy {
   @Input() userid: string;
   private alive = true;
   value: number;
-  falta: number;
+  lack: number;
 
   projects: Project[];
 
@@ -65,7 +65,7 @@ export class SoldevCardFrontComponent implements OnDestroy {
       progress += project.currentSpentTime * 100 / project.estimatedDuration;
       }
     this.value = Math.round(progress / this.countProject);
-    this.falta = 100 - this.value;
+    this.lack = 100 - this.value;
     this.getDataChart();
   }
 
@@ -92,7 +92,7 @@ export class SoldevCardFrontComponent implements OnDestroy {
       },
       {
         iconColor: visitorsPieLegend.secondSection,
-        title: 'Falta',
+        title: 'Lack',
       },
     ];
   }

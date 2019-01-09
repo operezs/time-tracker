@@ -32,6 +32,8 @@ export class ReportListComponent implements OnInit {
   admin = false;
   user: User;
   project: Project[];
+
+  spinner = true;
   
   @Input() userInfoView: User;
   @Input() userInfo: boolean;
@@ -219,6 +221,8 @@ export class ReportListComponent implements OnInit {
   }
 
   dataFilter() {
+    this.spinner = true;   
+
     let projectId = ''; 
     let userId = '';
     let startDate: Date = null;
@@ -245,7 +249,8 @@ export class ReportListComponent implements OnInit {
     this.service.getReports(startDate, endDate, projectId, userId)
                 .subscribe((reports: Response<Report[]>) => {
       this.source.load(reports.data);
-      this.calcTotalTime(reports.data);     
+      this.calcTotalTime(reports.data);  
+      this.spinner = false;   
     });
   }
 

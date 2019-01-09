@@ -22,6 +22,7 @@ import { Response } from '../../../@core/models/response';
   `],
 })
 export class UserRoleComponent implements OnInit {
+  spinner = true;
   settings = {
     hideSubHeader: true,
     actions: false,
@@ -109,6 +110,7 @@ export class UserRoleComponent implements OnInit {
     this.service.getRoles()
     .subscribe((roles: Response<Role[]>) => {
       this.source.load(roles.data);
+      this.spinner = false;
     });
   }
 

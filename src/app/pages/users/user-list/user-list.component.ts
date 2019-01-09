@@ -26,6 +26,7 @@ import { Role } from '../../../@core/models/role';
 export class UserListComponent implements OnInit {
 
   private roles: Role[];
+  spinner = true;
 
   settings = {
     hideSubHeader: true,
@@ -134,14 +135,8 @@ export class UserListComponent implements OnInit {
   getTableData() {
     this.service.getUsers()
     .subscribe((users: Response<User[]>) => {
-      // quit--
-      const user2: User[] = [];
-      for (const user of users.data) {
-        if (!user.isDeleted)
-        user2.push(user);
-      }
-      // ---
-      this.source.load(user2);
+      this.source.load(users.data);
+      this.spinner = false;
     });
   }
 

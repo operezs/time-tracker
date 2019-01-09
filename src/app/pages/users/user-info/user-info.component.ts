@@ -42,6 +42,8 @@ export class UserInfoComponent implements OnInit {
   @Output() back = new EventEmitter();
   timeLoged: number;
 
+  spinner = true;
+
   constructor(private reportService: ReportService,
               private modalService: NgbModal,
               private projectService: ProjectService,
@@ -84,6 +86,7 @@ export class UserInfoComponent implements OnInit {
               this.projects.push(report.projects);
             }
         }
+      this.spinner = false;
       this.getSpentTime();   
     });
   }

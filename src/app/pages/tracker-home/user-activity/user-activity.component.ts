@@ -40,6 +40,8 @@ export class TrackerHomeUserActivityComponent {
   types = ['all work', 'this week', 'this month', 'this year', 'last week', 'last month', 'last year'];
   currentTheme: string;
 
+  spinner = true;
+
   constructor(private themeService: NbThemeService, 
               private modalService: NgbModal,
               private reportService: ReportService,
@@ -63,6 +65,8 @@ export class TrackerHomeUserActivityComponent {
   }
 
   filterDate() {
+    this.spinner = true;
+
     switch (this.type)
           {
           case 'this week':
@@ -135,6 +139,7 @@ export class TrackerHomeUserActivityComponent {
         }
           this.userProjects.set(user.id, projectsUser);
           this.userReportsTime.set(user.id, hours);  
+          this.spinner = false;
       });
     }
   }  
