@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 
@@ -34,8 +34,8 @@ export class TrackerHomeUserActivityComponent {
   startDate: Date = null;
   endDate: Date = null;
 
-  size = 'medium';
-      
+  countUser = false;
+
   type = 'all work';
   types = ['all work', 'this week', 'this month', 'this year', 'last week', 'last month', 'last year'];
   currentTheme: string;
@@ -61,6 +61,9 @@ export class TrackerHomeUserActivityComponent {
     this.userService.getUsers().subscribe((users: Response<User[]>) => {
       this.users = users.data;
       this.filterDate();
+      if (users.data.length >= 5) {
+        this.countUser = true;
+      }
       });
   }
 

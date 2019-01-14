@@ -32,7 +32,7 @@ export class AddProjectComponent implements OnInit {
     textField: 'firstName',
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
-    itemsShowLimit: 5,
+    itemsShowLimit: 8,
     allowSearchFilter: true,
   };
 

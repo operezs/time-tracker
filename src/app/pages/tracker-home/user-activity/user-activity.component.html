@@ -1,4 +1,4 @@
-<nb-card size="medium" [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
+<nb-card [ngClass]="{'card-heigth': countUser}" [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
     <nb-card-header>
       <span>User Activity</span>
       <div class="dropdown ghost-dropdown" ngbDropdown>
@@ -35,7 +35,7 @@
             <ng-template #noProjectAssig>
                   <div  class="value">
                     <span class = "badge badge-danger">
-                          No Project in this Moment
+                      None at this Time
                    </span>
                   </div>
             </ng-template>

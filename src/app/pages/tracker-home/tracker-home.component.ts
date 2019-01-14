@@ -46,14 +46,12 @@ constructor(  private projectService: ProjectService,
         this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
           this.projects = projects.data;
           this.spinner = false;
-
           });
       }
     else {
       this.projectService.getProjectsUser(this.userid).subscribe((projects: Response<Project[]>) => {
         this.projects = projects.data;
         this.spinner = false;
-
         }); 
     } 
   }
