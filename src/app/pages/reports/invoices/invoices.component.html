@@ -1,0 +1,32 @@
+<nb-card [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
+  <nb-card-header>
+    <div>Invoices</div>
+    <br>
+    <div class="row">
+
+
+      <div class="col-md-10">
+        <div class="row ">
+
+          <div class="col-md-3">
+            <input nbInput
+               placeholder="Select month"
+               [nbDatepicker]="formpicker">
+            <nb-datepicker #formpicker></nb-datepicker>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-success" (click)="dataFilter()">
+              Filter
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

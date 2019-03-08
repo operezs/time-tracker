@@ -1,0 +1,12 @@
+<nb-card [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
+  <nb-card-header>
+    <div>{{getMonthName(month)}} {{year}} Report</div>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+  <nb-card-footer>
+    <strong>Total time logged: </strong> {{totalTime}} hours
+  </nb-card-footer>
+</nb-card>

@@ -3,7 +3,7 @@ import { NbThemeService } from '@nebular/theme';
 import { delay, takeWhile } from 'rxjs/operators';
 import { LayoutService } from '../../../../@core/data/layout.service';
 import { ProjectService } from './../../../../@core/data/project.service';
-import { Response } from './../../../../@core/models/response';
+import { ApiResponse } from './../../../../@core/models/response';
 import { Project } from './../../../../@core/models/project';
 
 @Component({
@@ -43,12 +43,12 @@ export class SoldevCardFrontComponent implements OnDestroy {
 
   getData() {
     if (this.userAdmin) {
-      this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
+      this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
         this.projects = projects.data
         this.calcData();
       });
     } else {
-      this.projectService.getProjectsUser(this.userid).subscribe((projects: Response<Project[]>) => {
+      this.projectService.getProjectsUser(this.userid).subscribe((projects: ApiResponse<Project[]>) => {
         this.projects = projects.data
         this.calcData();
       });

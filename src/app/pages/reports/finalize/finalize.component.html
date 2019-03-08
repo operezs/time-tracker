@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <span>Finalize Month</span>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="onSubmit()" #finalizeForm="ngForm">
+    <div class="form-group">
+      <label for="time">Time:</label>
+      <div>
+        <input placeholder="Time in hores" type="number" class="form-control" id="time" name="time"
+          [(ngModel)]="invoice.time" disabled>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="extra">Extra:</label>
+      <div>
+        <input placeholder="Extra payments" type="number" class="form-control" id="extra" name="extra"
+          (change)="recalculateTotal()" [(ngModel)]="invoice.extra" required>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="user.internet">
+      <label for="internet">Internet:</label>
+      <div>
+          <input placeholder="Internet expenses" type="number" class="form-control" id="internet" name="internet"
+          (change)="recalculateTotal()" [(ngModel)]="invoice.internet" required>
+      </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="total">Total CUC:</label>
+        <div>
+            <input placeholder="Total CUC" type="number" class="form-control" id="total" name="total"
+            [(ngModel)]="invoice.totalCUC" disabled>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-md btn-success" [disabled]="!finalizeForm.valid">Save</button>
+      <button type="button" class="btn btn-md btn-primary" (click)="closeModal()">Close</button>
+    </div>
+    <!--button type="submit" class="btn btn-danger">Submit</button-->
+  </form>
+</div>

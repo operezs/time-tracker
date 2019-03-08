@@ -9,7 +9,7 @@ import { ProjectService } from '../../../@core/data/project.service';
 
 import { User } from '../../../@core/models/user';
 import { UserService } from './../../../@core/data/users.service';
-import { Response } from '../../../@core/models/response';
+import { ApiResponse } from '../../../@core/models/response';
 
 
 
@@ -56,7 +56,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   getItemsDropdown() {
-      this.userService.getUsers().subscribe((users: Response<User[]>) => {
+      this.userService.getUsers().subscribe((users: ApiResponse<User[]>) => {
         const userDrop: User[] = [];
         for (const user of users.data) {
           if (!user.isDeleted) {

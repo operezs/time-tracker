@@ -10,7 +10,7 @@ import { AddUserComponent } from '../add-user/add-user.component';
 
 import { UserService } from '../../../@core/data/users.service';
 import { User } from '../../../@core/models/user';
-import { Response } from './../../../@core/models/response';
+import { ApiResponse } from './../../../@core/models/response';
 import { UserRoleService } from '../../../@core/data/user-role.service';
 import { Role } from '../../../@core/models/role';
 
@@ -107,7 +107,7 @@ export class UserListComponent implements OnInit {
               private modalService: NgbModal,
               private roleService: UserRoleService) {}
   openAddUserModal() {
-    const modal: NgbModalRef = this.modalService.open(AddUserComponent, { size: 'sm', container: 'nb-layout' });
+    const modal: NgbModalRef = this.modalService.open(AddUserComponent, { size: 'lg', container: 'nb-layout' });
     (<AddUserComponent>modal.componentInstance).titleForm = 'New User';
     (<AddUserComponent>modal.componentInstance).roles = this.roles;
     (<AddUserComponent>modal.componentInstance).save.subscribe(data => {
@@ -116,7 +116,7 @@ export class UserListComponent implements OnInit {
   }
 
   editUser(user) {
-    const modal: NgbModalRef = this.modalService.open(AddUserComponent, { size: 'sm', container: 'nb-layout' });
+    const modal: NgbModalRef = this.modalService.open(AddUserComponent, { size: 'lg', container: 'nb-layout' });
     (<AddUserComponent>modal.componentInstance).user = user;
     (<AddUserComponent>modal.componentInstance).roles = this.roles;
     (<AddUserComponent>modal.componentInstance).titleForm = 'Edit User';
@@ -126,7 +126,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.roleService.getRoles().subscribe((roles: Response<Role[]>) => {
+    this.roleService.getRoles().subscribe((roles: ApiResponse<Role[]>) => {
       this.roles = roles.data;
       this.getTableData();
     })
@@ -134,7 +134,7 @@ export class UserListComponent implements OnInit {
 
   getTableData() {
     this.service.getUsers()
-    .subscribe((users: Response<User[]>) => {
+    .subscribe((users: ApiResponse<User[]>) => {
       this.source.load(users.data);
       this.spinner = false;
     });

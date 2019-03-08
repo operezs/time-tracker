@@ -7,7 +7,7 @@ import { Role } from '../../../@core/models/role';
 import { RoleInfoComponent } from './../role-info/role-info.component';
 import { RoleActionsComponent } from './../role-actions.component';
 import { UserRoleService } from './../../../@core/data/user-role.service';
-import { Response } from '../../../@core/models/response';
+import { ApiResponse } from '../../../@core/models/response';
 
 
 
@@ -108,7 +108,7 @@ export class UserRoleComponent implements OnInit {
 
   getTableData() {
     this.service.getRoles()
-    .subscribe((roles: Response<Role[]>) => {
+    .subscribe((roles: ApiResponse<Role[]>) => {
       this.source.load(roles.data);
       this.spinner = false;
     });

@@ -11,39 +11,52 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'OPTIONS',
     group: true,
   },
-  {
+  { // role developer
     title: 'Reports',
     icon: 'nb-compose',
-    link: '/pages/reports',    
+    children: [{
+      title: 'Reports',
+      link: '/pages/reports',
+    },
+    {
+      title: 'Archives',
+      link: '/pages/reports/archives',
+    }],
+  },
+  { // role admin
+    title: 'Reports',
+    icon: 'nb-compose',
+    children: [{
+      title: 'Reports',
+      link: '/pages/reports',
+    }, {
+      title: 'Missions',
+      link: '/pages/reports/missions',
+    }, {
+      title: 'Invoices',
+      link: '/pages/reports/invoices',
+    }, {
+      title: 'Archives',
+      link: '/pages/reports/archives',
+    }],
   },
   {
     title: 'Users',
     icon: 'nb-person',
     link: '/pages/users',
-    children: [{
-        title: 'Users List',
-        link: '/pages/users',
-      }, {
-        title: 'User Role',
-        link: '/pages/users/user-role',
-      }],
+    // children: [{
+    //     title: 'Users List',
+    //     link: '/pages/users',
+    //   }, {
+    //     title: 'User Role',
+    //     link: '/pages/users/user-role',
+    //   }],
   },
   {
     title: 'Projects',
     icon: 'ion-settings',
     link: '/pages/projects',
-  },
-
-   /*{
-    title: 'E-commerce',
-    icon: 'nb-e-commerce',
-    link: '/pages/dashboard',
-  },
-  {
-    title: 'IoT Dashboard',
-    icon: 'nb-home',
-    link: '/pages/iot-dashboard',
-  },
+  }/*,
   {
     title: 'FEATURES',
     group: true,

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
-import { Response } from './../models/response';
+import { ApiResponse } from './../models/response';
 
 import { Role } from '../models/role';
 
@@ -24,11 +24,11 @@ export class UserRoleService {
   }
 
   getRoles() {
-    return this.http.get<Response<Role[]>>(this.baseUrl);
+    return this.http.get<ApiResponse<Role[]>>(this.baseUrl);
   }
 
   getRole(id: string) {
-    return this.http.get<Response<Role>>(`${this.baseUrl}/${id}`);
+    return this.http.get<ApiResponse<Role>>(`${this.baseUrl}/${id}`);
   }
 
   createRole(role: Role) {

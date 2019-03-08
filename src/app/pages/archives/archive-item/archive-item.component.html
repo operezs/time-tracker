@@ -1,0 +1,21 @@
+<nb-card [size]="small">
+  <nb-card-header class="title">
+    {{getMonthName(month)}}, {{year}}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-success" (click)="showReport()">
+          Report
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-warning" (click)="showInvoice()">
+          Invoice
+        </button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 import { User } from './../../@core/models/user';
-import { Response } from './../../@core/models/response';
+import { ApiResponse } from './../../@core/models/response';
 import { UserService } from './../../@core/data/users.service';
 import { Project } from './../../@core/models/project';
 import { Role } from './../../@core/models/role';
@@ -34,22 +34,22 @@ constructor(  private projectService: ProjectService,
   getData() {
     const roleName = this.userService.getDecodedAccessToken().roleName;
     this.userid = this.userService.getDecodedAccessToken().id;
-    this.userService.getUser(this.userid).subscribe((user: Response<User>) =>{
+    this.userService.getUser(this.userid).subscribe((user: ApiResponse<User>) =>{
       this.user = user.data;
-      this.roleService.getRole(this.user.roleId).subscribe((role: Response<Role>) => {
-        this.role = role.data;     
-        });
+      // this.roleService.getRole(this.user.roleId).subscribe((role: Response<Role>) => {
+      //   this.role = role.data;     
+      //   });
       });
 
     if (roleName === 'Admin')
       {this.userAdmin = true;        
-        this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
+        this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
           this.projects = projects.data;
           this.spinner = false;
           });
       }
     else {
-      this.projectService.getProjectsUser(this.userid).subscribe((projects: Response<Project[]>) => {
+      this.projectService.getProjectsUser(this.userid).subscribe((projects: ApiResponse<Project[]>) => {
         this.projects = projects.data;
         this.spinner = false;
         }); 

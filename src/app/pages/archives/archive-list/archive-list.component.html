@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card size="large">
+      <nb-card-header *ngIf="roleName=='Admin'">
+        <div class="col-md-4">
+          <button class="btn btn-outline btn-info" (click)="goBack()">
+            <i class="ion-arrow-left-c"></i>
+            {{user.firstName}} {{user.lastName}}
+          </button>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <!-- List of months-year -->
+        <nb-tabset *ngIf="!selectedOption">
+          <nb-tab *ngFor="let archive of archives" tabTitle="{{archive.year}}">
+            <div class="row">
+              <div *ngFor="let month of archive.months" class="col-lg-3 col-md-4 col-sm-6 archive-item">
+                <ngx-archive-item [year]="archive.year" [month]="month" (report)="showReport(archive.year, month)"
+                (invoice)="showInvoice(archive.year, month)"></ngx-archive-item>
+              </div>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+
+        <!-- Report list -->
+        <ngx-report-list *ngIf="selectedOption == 'report'" [user]="user" [year]="selectedYear" [month]="selectedMonth"></ngx-report-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div>

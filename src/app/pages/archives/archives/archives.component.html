@@ -1,0 +1,2 @@
+<ngx-users *ngIf="!selectedUser" (select)="selectUser($event)"></ngx-users>
+<ngx-archive-list *ngIf="selectedUser" [user]="selectedUser" (back)="unselectUser()"></ngx-archive-list>

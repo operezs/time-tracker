@@ -1,5 +1,5 @@
 import { UserService } from './../../../@core/data/users.service';
-import { Response } from './../../../@core/models/response';
+import { ApiResponse } from './../../../@core/models/response';
 import { ProjectService } from './../../../@core/data/project.service';
 import { Component, OnDestroy, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
@@ -48,13 +48,13 @@ export class TrackerHomeProjectActivityComponent implements OnDestroy {
     const roleName = this.userService.getDecodedAccessToken().roleName;
     const userid = this.userService.getDecodedAccessToken().id;
     if (roleName === 'Admin') {
-      this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
+      this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
         if (projects.data.length >= 5) {
           this.countProject = true;
          }
         });
     } else {
-      this.projectService.getProjectsUser(userid).subscribe((projects: Response<Project[]>) => {
+      this.projectService.getProjectsUser(userid).subscribe((projects: ApiResponse<Project[]>) => {
        if (projects.data.length >= 5) {
           this.countProject = true;
         }

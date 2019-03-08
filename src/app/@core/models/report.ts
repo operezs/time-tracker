@@ -1,23 +1,27 @@
 import { User } from './user';
 import { Project } from './project';
+import { Task } from './task';
 export class Report {
     id: string;
-    projects: Project;
-    users: User;
-    time: number;
-    description: string;
+    date: Date;
+    tasks: Task[];
+    user: User;
     createdAt: Date;
     updatedAt: Date;
-    date: Date;
 
-    constructor(projects: Project, users: User,  description: string,
-                time?: number, date?: Date, updatedAt?: Date, createdAt?: Date  ) {
-        this.projects = projects;
-        this.users = users;
-        this.time = time;
-        this.description = description;
+    constructor(user: User, date?: Date, updatedAt?: Date, createdAt?: Date  ) {
+        this.user = user;
+        this.date = date;
+        this.tasks = [];
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.date = date;
+    }
+
+    getTime() {
+        let totalTime: number = 0;
+        this.tasks.forEach(task => {
+            totalTime += task.time;
+        });
+        return totalTime;
     }
 }

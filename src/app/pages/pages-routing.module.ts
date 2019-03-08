@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
-// import { DashboardComponent } from './dashboard/dashboard.component';
 import { TrackerHomeComponent } from './tracker-home/tracker-home.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { UsersComponent } from './users/users/users.component';
@@ -10,6 +9,9 @@ import { ProjectListComponent } from './projects/project-list/project-list.compo
 import { ReportListComponent } from './reports/report-list/report-list.component';
 import { UserRoleComponent } from './users/user-role/user-role.component';
 import { AuthGuardAdmin } from './../@core/data/auth-guard-admin.service';
+import { InvoicesComponent } from './reports/invoices/invoices.component';
+import { ArchivesComponent } from './archives/archives/archives.component';
+import { MissionsComponent } from './reports/missions/missions.component';
 
 
 
@@ -24,29 +26,52 @@ const routes: Routes = [{
     {
       path: 'reports',
       component: ReportListComponent,
-    }, {
+    },
+    {
+      path: 'reports/invoices',
+      canActivate: [AuthGuardAdmin],
+      component: InvoicesComponent,
+    },
+    {
+      path: 'reports/missions',
+      canActivate: [AuthGuardAdmin],
+      component: MissionsComponent,
+    },
+    {
+      path: 'reports/archives-users',
+      canActivate: [AuthGuardAdmin],
+      component: ArchivesComponent,
+    },    
+    {
+      path: 'reports/archives',
+      component: ArchivesComponent,
+    },
+    {
+      path: 'reports/archives-reports',
+      component: ArchivesComponent,
+    },
+    {
       path: 'users',
       canActivate: [AuthGuardAdmin],
       component: UsersComponent,
-    }, {
+    }, 
+    {
       path: 'users/user-role',
       canActivate: [AuthGuardAdmin],
       component: UserRoleComponent,
-    }, {
+    }, 
+    {
       path: 'projects',
       // canActivate: [AuthGuardAdmin],
       component: ProjectListComponent,
     }, 
 
 
+
+
+
     // theme  
-  /* {
-    path: 'dashboard',
-    component: ECommerceComponent,
-  }, {
-    path: 'iot-dashboard',
-    component: DashboardComponent,
-  },  {
+  {
     path: 'ui-features',
     loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
   }, {
@@ -76,7 +101,7 @@ const routes: Routes = [{
   }, {
     path: 'miscellaneous',
     loadChildren: './miscellaneous/miscellaneous.module#MiscellaneousModule',
-  }, */ {
+  }, {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

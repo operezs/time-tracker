@@ -3,74 +3,77 @@
 </div>
 <div class="modal-body">
   <form (ngSubmit)="onSubmit()" #addReportForm="ngForm">
-     <div>
+    <!-- <div>
         <label for="userName">Name:</label>
          <div class = "container">
            <h4>{{userName}}</h4>
          </div>
      </div>
-      <br>
-
-    <div class = "row">
-      <div class=" col-md-5 form-group">
+      <br> -->
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <label for="date">Date:</label>
+        <div>
+          <input class="form-control" placeholder="Date report" [nbDatepicker]="formpicker" name="Date report"
+            [(ngModel)]="reportDate" required>
+        </div>
+        <nb-datepicker class="show-front" #formpicker></nb-datepicker>
+      </div>
+    </div>
+    <form (ngSubmit)="onSubmit()" #addTaskForm="ngForm">
+      <div class="row">
+        <div class="col-md-7 form-group">
+          <label for="projectName">Project Name:</label>
+          <ng-multiselect-dropdown class="form-control" [placeholder]="'Select Project'" [data]="dropdownList"
+            [(ngModel)]="selectedProjects" name="selectedProject" [settings]="dropdownSettings"
+            (onSelect)="onItemSelect($event)" required>
+          </ng-multiselect-dropdown>
+        </div>
+        <div class=" col-md-3 form-group">
           <label for="time">Time:</label>
           <div>
-            <input placeholder="Time in hores" 
-                   type="number" 
-                   class="form-control" 
-                   id="time" 
-                   name="time" 
-                   [(ngModel)]="report.time"
-                   required>
+            <input placeholder="Time in hores" type="number" class="form-control" id="time" name="time"
+              [(ngModel)]="newTask.time" required>
           </div>
         </div>
-
-      <div class="col-md-7 form-group">
-          <label for="date">Date:</label>
-          <div>
-            <input  class="form-control"  
-                    placeholder="Date report"
-                    [nbDatepicker]="formpicker"
-                    name = "Date report"
-                    [(ngModel)]="reportDate"
-                    required>
-          </div>
-          <nb-datepicker class="show-front" #formpicker></nb-datepicker>
-      </div>  
-    </div>
-    <br>
-    <div>    
-      <label for="projectName">Project Name:</label>
-      <div>
-        <ng-multiselect-dropdown
-                class="form-control"
-                [placeholder]="'Select Project'"
-                [data]="dropdownList"
-                [(ngModel)]="projectAssignedItems"
-                name="projectAssignedItems"
-                [settings]="dropdownSettings"
-                (onSelect)="onItemSelect($event)"
-                required>        
-        </ng-multiselect-dropdown>
+        <div class="col-md-2 form-group">
+          <button type="button" class="btn btn-outline-primary btn-icon" [disabled]="!addTaskForm.valid" (click)="addTask()">
+            <i class="ion-plus-round"></i>
+          </button>
+          <!-- <div class="add-button">
+            <i class="ion-plus-round"></i>
+        </div> -->
+        </div>
       </div>
-    </div>
-    <br>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <div>
-        <textarea type="text" 
-                  class="form-control" 
-                  id="description" 
-                  name="description" 
-                  [(ngModel)]="report.description"
-                  required>
+      <br>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <div>
+          <textarea type="text" class="form-control" id="description" name="description"
+            [(ngModel)]="newTask.description" required>
         </textarea>
+        </div>
+      </div>
+    </form>
+    <div class="lists row">
+      <div class="col-md-12">
+        <nb-card class="list-card" size="small">
+          <nb-card-header>Tasks <span class="badge badge-primary badge-pill">{{report.getTime()}}</span>
+          </nb-card-header>
+
+          <nb-list>
+            <nb-list-item class="list-item" *ngFor="let task of report.tasks">
+              <!-- <nb-user [name]="task.project.projectName" [title]="task.description">
+              </nb-user> -->
+              <ngx-task-item [task]="task"></ngx-task-item>
+            </nb-list-item>
+          </nb-list>
+        </nb-card>
       </div>
     </div>
-    
     <div class="modal-footer">
-        <button type="submit" class="btn btn-md btn-success" [disabled]="!addReportForm.valid">Save</button>
-        <button type="button" class="btn btn-md btn-primary" (click)="closeModal()" >Close</button>
+      <button type="submit" class="btn btn-md btn-success" [disabled]="!addReportForm.valid">Save</button>
+      <button type="button" class="btn btn-md btn-primary" (click)="closeModal()">Close</button>
     </div>
     <!--button type="submit" class="btn btn-danger">Submit</button-->
   </form>

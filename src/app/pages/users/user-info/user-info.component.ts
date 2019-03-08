@@ -8,7 +8,7 @@ import { User } from './../../../@core/models/user';
 import { Project } from './../../../@core/models/project';
 import { Role } from '../../../@core/models/role';
 import { UserRoleService } from './../../../@core/data/user-role.service';
-import { Response } from './../../../@core/models/response';
+import { ApiResponse } from './../../../@core/models/response';
 import { UserPaymentComponent } from './../user-payment/user-payment.component';
 import { Report } from './../../../@core/models/report';
 import { ReportListComponent } from '../../reports/report-list/report-list.component';
@@ -26,7 +26,7 @@ export class UserInfoComponent implements OnInit {
   @Output() userInfo: boolean;
   @Output() userMonthWork = new Map();
 
-  @ViewChild(ReportListComponent) reportList: ReportListComponent ;
+  @ViewChild(ReportListComponent) reportList: ReportListComponent;
 
 
   rangeDate: any;
@@ -45,20 +45,20 @@ export class UserInfoComponent implements OnInit {
   spinner = true;
 
   constructor(private reportService: ReportService,
-              private modalService: NgbModal,
-              private projectService: ProjectService,
-              private roleService: UserRoleService) {
-    }
+    private modalService: NgbModal,
+    private projectService: ProjectService,
+    private roleService: UserRoleService) {
+  }
 
   ngOnInit() {
-    this.getData();    
+    this.getData();
     this.userInfo = true;
   }
 
   getData() {
-    this.roleService.getRole(this.user.roleId).subscribe((role: Response<Role>) => {
-      this.role = role.data;     
-    });
+    // this.roleService.getRole(this.user.roleId).subscribe((role: Response<Role>) => {
+    //   this.role = role.data;     
+    // });
     this.getValues(null, null, '');
   }
 
@@ -66,43 +66,47 @@ export class UserInfoComponent implements OnInit {
 
     if (this.rangeDate) {
       this.startDate = this.rangeDate.start;
-      this.endDate = this.rangeDate.end; 
-      this.getValues(this.startDate, this.endDate, '');  
-    } else{
+      this.endDate = this.rangeDate.end;
+      this.getValues(this.startDate, this.endDate, '');
+    } else {
       this.startDate = null;
-      this.endDate = null; 
-      this.getValues(this.startDate, this.endDate, '');  
+      this.endDate = null;
+      this.getValues(this.startDate, this.endDate, '');
     }
-  } 
-  
+  }
+
   getValues(startDate?: Date, endDate?: Date, projectId?: string) {
     this.projects = [];
     this.projectReportId.clear();
-    this.reportService.getReports(startDate, endDate, projectId, this.user.id).subscribe((reports: Response<Report[]>) => {
+    this.reportService.getReports(startDate, endDate, projectId, this.user.id).subscribe((reports: ApiResponse<Report[]>) => {
       this.reports = reports.data;
-      for (let report of this.reports) {
-          if ( !this.projectReportId.has(report.projects.id)) {
-              this.projectReportId.add(report.projects.id);
-              this.projects.push(report.projects);
-            }
-        }
+      this.reports.forEach(report => {
+        report.tasks.forEach(task => {
+          if (!this.projectReportId.has(task.project.id)) {
+            this.projectReportId.add(task.project.id);
+            this.projects.push(task.project);
+          }
+        })
+      });
       this.spinner = false;
-      this.getSpentTime();   
+      this.getSpentTime();
     });
   }
 
   getSpentTime() {
-    for (let project of this.projects) {
-          let userWork = 0;
-          for (let report of this.reports) {
-            if (report.projects.id === project.id) {
-              userWork += report.time;
-              }
-            }
-          this.userMonthWork.set(project.id , userWork);
-        }
-      
-      this.reportList.dataFilter();    // Refresh data Report View
+    this.projects.forEach(project => {
+      let userWork = 0;
+      this.reports.forEach(report => {
+        report.tasks.forEach(task => {
+          if (task.project.id === project.id) {
+            userWork += task.time;
+          }
+        });        
+      });
+      this.userMonthWork.set(project.id, userWork);
+    });
+
+    this.reportList.dataFilter();    // Refresh data Report View
 
     /*     this.reportService.getReports(null, null, projectId, userId).subscribe((reports: Response<Report[]>) => {
       let spentTimeUser = 0;
@@ -110,11 +114,11 @@ export class UserInfoComponent implements OnInit {
           spentTimeUser += report.time;
         }
       this.spentTimeUser.push(spentTimeUser);
-    }); */ 
+    }); */
   }
 
   goBack() {
-   this.back.emit();
+    this.back.emit();
   }
 
   openPaymentModal() {
@@ -128,9 +132,9 @@ export class UserInfoComponent implements OnInit {
   cleanRangeDate() {
     this.rangeDate = '';
     this.startDate = null;
-    this.endDate = null; 
-    this.getValues(this.startDate, this.endDate, '');  
-   }
+    this.endDate = null;
+    this.getValues(this.startDate, this.endDate, '');
+  }
 
 
 }

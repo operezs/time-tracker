@@ -6,8 +6,9 @@ import { Report } from '../../../@core/models/report';
 import { ReportService } from '../../../@core/data/report.service';
 import { ProjectService } from '../../../@core/data/project.service';
 import { Project } from '../../../@core/models/project';
-import { Response } from '../../../@core/models/response';
+import { ApiResponse } from '../../../@core/models/response';
 import { User } from '../../../@core/models/user';
+import { Task } from '../../../@core/models/task';
 
 
 
@@ -23,17 +24,16 @@ export class AddReportComponent implements OnInit {
   projects: Project[];
   project: Project;
   titleForm: string;
-  
 
-  projectAssignedItems = [];
+  selectedProjects = [];
   dropdownList = [];
 
   dropdownSettings = {
     singleSelection: true,
     idField: 'id',
     textField: 'projectName',
-   // selectAllText: 'Select All',
-   //  unSelectAllText: 'UnSelect All',
+    // selectAllText: 'Select All',
+    //  unSelectAllText: 'UnSelect All',
     itemsShowLimit: 1,
     allowSearchFilter: true,
   };
@@ -43,62 +43,71 @@ export class AddReportComponent implements OnInit {
   max: Date;
   reportDate: Date;
 
-  userName: string;
+  newTask: Task;
 
   @Output() save = new EventEmitter();
 
   constructor(private activeModal: NgbActiveModal,
-              private reportService: ReportService,
-              private projectService: ProjectService,
-              protected dateService: NbDateService<Date>) {
+    private reportService: ReportService,
+    protected dateService: NbDateService<Date>) {
     this.min = this.dateService.addDay(this.dateService.today(), -5);
-    this.max = this.dateService.addDay(this.dateService.today(), 5);            
-    if (!this.report) {
-      this.report = new Report( this.project , this.user, '');
-    }
+    this.max = this.dateService.addDay(this.dateService.today(), 5);
   }
 
   ngOnInit() {
     this.getItemsDropdown();
-    if (this.report.id) {
-        this.userName = this.report.users.firstName;
-    } else {
-        this.userName = this.user.firstName;
+    if (!this.report) {
+      this.report = new Report(this.user, new Date());
     }
+    if (!this.newTask) {
+      this.newTask = new Task();
+    }
+    // if (this.report.id) {
+    //     this.userName = this.report.user.firstName;
+    // } else {
+    //     this.userName = this.user.firstName;
+    // }
   }
 
-  closeModal() {    
+  closeModal() {
     this.activeModal.close();
   }
 
   getItemsDropdown() {
     this.dropdownList = this.projects;
-    if (this.report.projects)
-       this.projectAssignedItems = [this.report.projects];
+    // if (this.projects)
+    //    this.projectAssignedItems = [this.projects];
   }
 
-  reportAssignedMultiSelect() {
-        this.report.projects = this.projectAssignedItems[0].id;
-  }
+  // reportAssignedMultiSelect() {
+  //       this.projects = this.selectedProjects[0].id;
+  // }
 
   onSubmit() {
-    this.reportAssignedMultiSelect();
+    // this.reportAssignedMultiSelect();
     this.report.date = this.reportDate;
+    console.log(this.selectedProjects[0]);
     if (this.report.id) {
-        this.projectAssignedItems[0].id = this.report.users.id;
-        this.report.users = this.projectAssignedItems[0].id; 
-        this.reportService.updateReport(this.report).subscribe( data => {
+      // this.projectAssignedItems[0].id = this.report.user.id;
+      // this.report.user = this.selectedProjects[0].id;
+      this.reportService.updateReport(this.report).subscribe(data => {
         this.closeModal();
         this.onSave();
       });
     } else {
-        this.projectAssignedItems[0].id = this.user.id;
-        this.report.users = this.projectAssignedItems[0].id; 
-        this.reportService.createReport(this.report).subscribe( data => {
+      // this.projectAssignedItems[0].id = this.user.id;
+      // this.report.user = this.selectedProjects[0].id;
+      this.reportService.createReport(this.report).subscribe(data => {
         this.closeModal();
         this.onSave();
       });
     }
+  }
+
+  addTask() {
+    const task: Task = new Task(this.project, this.newTask.time, this.newTask.description);
+    this.report.tasks.push(task);
+    this.newTask = new Task();
   }
 
 
@@ -109,10 +118,11 @@ export class AddReportComponent implements OnInit {
   // projectMultiSelect
   onItemSelect(item: any) {
     // this.roleAssignedItems.push(item);
+    this.project = this.projects.find(project => project.id == item.id);
   }
 
   onSelectAll(item: any) {
-  //  this.multiDropdown.pushSelectedItems(this.dropdownList);
+    //  this.multiDropdown.pushSelectedItems(this.dropdownList);
   }
 
   // userMultiSelect
@@ -120,7 +130,7 @@ export class AddReportComponent implements OnInit {
     // this.roleAssignedItems.push(item);
   }
   onSelectAllUser(item: any) {
-  //  this.multiDropdown.pushSelectedItems(this.dropdownList);
+    //  this.multiDropdown.pushSelectedItems(this.dropdownList);
   }
 
 }

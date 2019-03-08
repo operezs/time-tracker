@@ -6,7 +6,7 @@ import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
 import { UserService } from './../../../@core/data/users.service';
 import { User } from '../../../@core/models/user';
-import { Response } from '../../../@core/models/response';
+import { ApiResponse } from '../../../@core/models/response';
 
 @Component({
   selector: 'ngx-header',

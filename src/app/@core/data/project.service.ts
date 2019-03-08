@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
 
 import { Project} from '../models/project';
-import { Response } from '../models/response';
+import { ApiResponse } from '../models/response';
 
 @Injectable()
 
@@ -20,15 +20,15 @@ export class ProjectService {
       this.baseUrl = `${this.global.apiUrl()}projects`;
     }
     getProjects() {
-      return this.http.get<Response<Project[]>>(this.baseUrl);
+      return this.http.get<ApiResponse<Project[]>>(this.baseUrl);
     }
 
     getProjectsUser(userId: string){
-      return this.http.get<Response<Project[]>>(`${this.baseUrl}/users/${userId}`);
+      return this.http.get<ApiResponse<Project[]>>(`${this.baseUrl}/users/${userId}`);
     }
 
     getProject(id: string) {
-      return this.http.get<Response<Project>>(`${this.baseUrl}/${id}`);
+      return this.http.get<ApiResponse<Project>>(`${this.baseUrl}/${id}`);
     }
     createProject(project: Project) {
       return this.http.post(this.baseUrl, project);

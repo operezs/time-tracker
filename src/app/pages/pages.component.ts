@@ -23,14 +23,11 @@ export class PagesComponent {
 
   constructor( private userService: UserService ) {
    
-    this.role = this.userService.getDecodedAccessToken().roleName;  
+    this.role = this.userService.getDecodedAccessToken().roleName;
     if (this.role === 'Admin') {
-        this.menu = MENU_ITEMS;
+      this.menu = [...this.menu, MENU_ITEMS[0], MENU_ITEMS[1], MENU_ITEMS[3], MENU_ITEMS[4], MENU_ITEMS[5]];
     } else {
-        this.menu = [...this.menu,MENU_ITEMS[0],MENU_ITEMS[1], MENU_ITEMS[2],MENU_ITEMS[4]];
-      } 
+      this.menu = [...this.menu, MENU_ITEMS[0], MENU_ITEMS[1], MENU_ITEMS[2], MENU_ITEMS[5]];
+    }
   }
-
-
-
 }

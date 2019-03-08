@@ -5,7 +5,7 @@ import { Role } from '../../../@core/models/role';
 import { User } from '../../../@core/models/user';
 import { UserService } from '../../../@core/data/users.service';
 import { UserRoleService } from './../../../@core/data/user-role.service';
-import { Response } from '../../../@core/models/response';
+import { ApiResponse } from '../../../@core/models/response';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class AddUserComponent implements OnInit {
 
   // Is declared as an arrangement in case several roles are assigned
   roleAssignedItems = [];
-  dropdownList = [];
+  rolesList = [];
 
   dropdownSettings = {
     singleSelection: true,
@@ -46,33 +46,33 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getItemsDropdown();
+    // this.getItemsDropdown();
   }
 
   closeModal() {
     this.activeModal.close();
   }
 
-  getItemsDropdown() {
-        this.dropdownList = this.roles;
-        if (this.user.roleId) {
-          this.userRoleService.getRole(this.user.roleId).subscribe((role: Response<Role>) => {
-            this.roleAssignedItems = [role.data];
-          });
-        }
-  }
+  // getItemsDropdown() {
+  //       this.rolesList = this.roles;
+  //       if (this.user.roleId) {
+  //         this.userRoleService.getRole(this.user.roleId).subscribe((role: Response<Role>) => {
+  //           this.roleAssignedItems = [role.data];
+  //         });
+  //       }
+  // }
 
-  roleAssignedMultiSelect() {
-    if (this.roleAssignedItems.length !== 0) {
-        this.user.roleId = this.roleAssignedItems[0].id;
-    } else {
-        delete this.user.roleId;
-    }
-  }
+  // roleAssignedMultiSelect() {
+  //   if (this.roleAssignedItems.length !== 0) {
+  //       this.user.roleId = this.roleAssignedItems[0].id;
+  //   } else {
+  //       delete this.user.roleId;
+  //   }
+  // }
 
 
   onSubmit() {
-    this.roleAssignedMultiSelect();
+    // this.roleAssignedMultiSelect();
     if (this.user.id) {
       this.userService.updateUser(this.user).subscribe( data => {
         this.closeModal();

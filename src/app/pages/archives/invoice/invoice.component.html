@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <span>Invoice {{getMonthName(month)}} {{year}}</span>
+</div>
+<div class="modal-body">
+  <ul>
+    <li>User: {{user.firstName}} {{user.lastName}}</li>
+    <li>Total time: {{invoice.time}}</li>
+    <li>Extra payment: {{invoice.extra}}</li>
+    <li *ngIf="invoice.internet">Internet hours: {{invoice.internet}}</li>
+    <li>Total CUC: {{invoice.totalCUC}}</li>
+  </ul>
+</div>
+
+<div class="modal-footer">
+  <button type="submit" class="btn btn-md btn-primary" (click)="closeModal()">Ok</button>
+</div>

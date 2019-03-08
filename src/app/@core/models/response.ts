@@ -1,5 +1,5 @@
 
-export class Response<T> {
+export class ApiResponse<T> {
     success: boolean;
     version: string;
     date: Date;

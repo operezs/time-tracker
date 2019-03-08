@@ -9,7 +9,7 @@ import { ProjectService } from '../../../@core/data/project.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { ProjectInfoComponent } from './../project-info/project-info.component';
 import { Project } from '../../../@core/models/project';
-import { Response } from '../../../@core/models/response';
+import { ApiResponse } from '../../../@core/models/response';
 import { UserService } from '../../../@core/data/users.service';
 import { User } from '../../../@core/models/user';
 
@@ -131,7 +131,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((users: Response<User[]>) => {
+    this.userService.getUsers().subscribe((users: ApiResponse<User[]>) => {
       const users2: User[] = [];
       for (const user of users.data) {
         if (!user.isDeleted)
@@ -148,13 +148,13 @@ export class ProjectListComponent implements OnInit {
     this.userid = this.userService.getDecodedAccessToken().id;
     if (roleName === 'Admin') {
         this.admin = true;
-        this.projectService.getProjects().subscribe((projects: Response<Project[]>) => {
+        this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
           this.source.load(projects.data);
           this.spinner = false;
           });
       }
     else {
-      this.projectService.getProjectsUser(this.userid).subscribe((projects: Response<Project[]>) => {
+      this.projectService.getProjectsUser(this.userid).subscribe((projects: ApiResponse<Project[]>) => {
         this.source.load(projects.data);
         this.spinner = false;
         }); 
