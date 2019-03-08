@@ -4,11 +4,15 @@
       {{initials}}
     </div>
   </div>
-  <div class="col-md-10 media-body">
+  <div class="col-md-9 media-body">
     <h4 class="pmd-list-title">{{task.project.projectName}}</h4>
     <p class="pmd-list-subtitle">{{task.description}}</p>
   </div>
   <div class="col-md-1">
     <span class="badge badge-primary badge-pill">{{task.time}}</span>
   </div>
+  <div class="col-md-1">
+      <nb-action icon="fas fa-trash" (click)="deleteTask()"></nb-action>
+    </div>
+  
 </div>

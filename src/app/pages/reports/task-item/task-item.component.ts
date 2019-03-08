@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../../../@core/models/task';
 
 @Component({
@@ -10,6 +10,7 @@ export class TaskItemComponent implements OnInit {
 
   initials: string;
   @Input() task: Task;
+  @Output() delete = new EventEmitter();
 
   constructor() { }
 
@@ -19,6 +20,10 @@ export class TaskItemComponent implements OnInit {
     names.forEach(name => {
       this.initials += name.charAt(0).toUpperCase();
     });
+  }
+
+  deleteTask() {
+    this.delete.emit();
   }
 
 }

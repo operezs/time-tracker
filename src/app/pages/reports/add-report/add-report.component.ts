@@ -110,6 +110,9 @@ export class AddReportComponent implements OnInit {
     this.newTask = new Task();
   }
 
+  deleteTask(index: number) {
+    this.report.tasks.splice(index, 1);
+  }
 
   onSave() {
     this.save.emit();

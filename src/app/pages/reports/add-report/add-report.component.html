@@ -62,10 +62,10 @@
           </nb-card-header>
 
           <nb-list>
-            <nb-list-item class="list-item" *ngFor="let task of report.tasks">
+            <nb-list-item class="list-item" *ngFor="let task of report.tasks;let i=index">
               <!-- <nb-user [name]="task.project.projectName" [title]="task.description">
               </nb-user> -->
-              <ngx-task-item [task]="task"></ngx-task-item>
+              <ngx-task-item [task]="task" (delete)="deleteTask(i)"></ngx-task-item>
             </nb-list-item>
           </nb-list>
         </nb-card>

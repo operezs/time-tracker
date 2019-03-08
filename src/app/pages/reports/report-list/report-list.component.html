@@ -42,22 +42,18 @@
 
         </div>
       </div>
-      <div class="col-md-3" *ngIf="!userInfo">
-        <div class="row">
-          <div class="col-md-6 button-container">
-            <button type="button" class="btn btn-danger d-flex" (click)="finalizeMonth()">
-              Finalize
-            </button>
-          </div>
-          <div class="col-md-6 button-container">
-            <button type="button" class="btn btn-primary d-flex" (click)="openAddReportModal()">
-              Add New
-              <i class="ion-plus-round"></i>
-            </button>
-          </div>
-        </div>
+      <div class="col-md-1">
       </div>
-
+      <div class="col-md-1">
+        <button type="button" class="btn btn-outline-danger btn-icon" (click)="finalizeMonth()" *ngIf="!userInfo">
+          <i class="fa fa-check"></i>
+        </button>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-outline-primary btn-icon" (click)="openAddReportModal()" *ngIf="!userInfo">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
     </div>
 
   </nb-card-header>
