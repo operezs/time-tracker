@@ -12,7 +12,7 @@
       <nb-card-body>
         <!-- List of months-year -->
         <nb-tabset *ngIf="!selectedOption">
-          <nb-tab *ngFor="let archive of archives" tabTitle="{{archive.year}}">
+          <nb-tab *ngFor="let archive of archives;let i=index" tabTitle="{{archive.year}}" active="{{i==0}}">
             <div class="row">
               <div *ngFor="let month of archive.months" class="col-lg-3 col-md-4 col-sm-6 archive-item">
                 <ngx-archive-item [year]="archive.year" [month]="month" (report)="showReport(archive.year, month)"

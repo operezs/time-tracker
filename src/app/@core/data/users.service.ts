@@ -18,8 +18,7 @@ export class UserService {
   private baseUrl: string;
 
   constructor(private http: HttpClient,
-    private global: GlobalService,
-    private roleService: UserRoleService) {
+    private global: GlobalService) {
     this.baseUrl = `${this.global.apiUrl()}users`;
   }
 

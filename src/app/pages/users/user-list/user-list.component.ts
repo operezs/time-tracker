@@ -25,7 +25,6 @@ import { Role } from '../../../@core/models/role';
 })
 export class UserListComponent implements OnInit {
 
-  private roles: Role[];
   spinner = true;
 
   settings = {
@@ -44,33 +43,13 @@ export class UserListComponent implements OnInit {
         type: 'string',
         filter: true,
       },
-      roleId: {
+      role: {
         title: 'Role',
-        type: 'html',
-        valuePrepareFunction: (value) => {
-
-          if (value) {
-            for (let rol of this.roles) {
-              if (rol.id === value) {
-                return `<div class = "row">
-                          <div class = "container">
-                            ${rol.roleName}
-                          </div>
-                        </div>`;
-                }        
-              }      
-            } else {
-                 return `<div class = "row">
-                           <div class = "container">
-                             No Role Assigned
-                           </div>
-                         </div>`;
-              }
-          },
+        type: 'string',
         filter: true,
       },
       email: {
-        title: 'e-Mail',
+        title: 'Email',
         type: 'string',
         filter: true,
       },
@@ -109,7 +88,6 @@ export class UserListComponent implements OnInit {
   openAddUserModal() {
     const modal: NgbModalRef = this.modalService.open(AddUserComponent, { size: 'lg', container: 'nb-layout' });
     (<AddUserComponent>modal.componentInstance).titleForm = 'New User';
-    (<AddUserComponent>modal.componentInstance).roles = this.roles;
     (<AddUserComponent>modal.componentInstance).save.subscribe(data => {
      this.getTableData();
    });
@@ -118,7 +96,6 @@ export class UserListComponent implements OnInit {
   editUser(user) {
     const modal: NgbModalRef = this.modalService.open(AddUserComponent, { size: 'lg', container: 'nb-layout' });
     (<AddUserComponent>modal.componentInstance).user = user;
-    (<AddUserComponent>modal.componentInstance).roles = this.roles;
     (<AddUserComponent>modal.componentInstance).titleForm = 'Edit User';
     (<AddUserComponent>modal.componentInstance).save.subscribe(data => {
       this.getTableData();
@@ -126,10 +103,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.roleService.getRoles().subscribe((roles: ApiResponse<Role[]>) => {
-      this.roles = roles.data;
-      this.getTableData();
-    })
+    this.getTableData();
   }
 
   getTableData() {

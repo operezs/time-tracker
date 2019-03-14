@@ -15,7 +15,7 @@ export class User {
     createdAt: Date;
     updatedAt: Date;
 
-    constructor( userName: string, lastName: string, email: string,
+    constructor( userName?: string, lastName?: string, email?: string,
                 mobile?: string, salary?: number, internet?: boolean,
                 password?: string, role?: string, updatedAt?: Date, createdAt?: Date ) {
         this.firstName = userName;

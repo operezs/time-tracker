@@ -15,6 +15,7 @@ import { Project } from '../../../@core/models/project';
 import { UserService } from '../../../@core/data/users.service';
 import { User } from '../../../@core/models/user';
 import { FinalizeComponent } from '../finalize/finalize.component';
+import { getLocaleTimeFormat } from '@angular/common';
 
 @Component({
   selector: 'ngx-report-list',
@@ -32,7 +33,7 @@ export class ReportListComponent implements OnInit {
   status = 'Show';
   admin = false;
   user: User;
-  project: Project[];
+  projects: Project[];
   month: string;
 
   spinner: boolean;
@@ -94,7 +95,7 @@ export class ReportListComponent implements OnInit {
           return date;
         }
       },
-      users: {
+      user: {
         title: 'Developer Name',
         type: 'string',
         filter: true,
@@ -103,19 +104,26 @@ export class ReportListComponent implements OnInit {
           return name;
         }
       },
-      projects: {
-        title: 'Project',
-        type: 'string',
-        filter: true,
-        valuePrepareFunction: (value) => {
-          let name = `${value.projectName}`;
-          return name;
-        }
-      },
-      time: {
+      // tasks: {
+      //   title: 'Projects',
+      //   type: 'string',
+      //   filter: true,
+      //   valuePrepareFunction: (value) => {
+      //     let name = `${value.projectName}`;
+      //     return name;
+      //   }
+      // },
+      tasks: {
         title: 'Time Work',
         type: 'number',
         filter: true,
+        valuePrepareFunction: (value) => {
+          let reportTime = 0;
+          value.forEach(task => {
+            reportTime += task.time;
+          });
+          return reportTime;
+        }
       },
       id: {
         title: 'Actions',
@@ -159,7 +167,7 @@ export class ReportListComponent implements OnInit {
     const modal: NgbModalRef = this.modalService.open(FinalizeComponent, { size: 'sm', container: 'nb-layout' });
     (<FinalizeComponent>modal.componentInstance).user = this.user;
     (<FinalizeComponent>modal.componentInstance).time = this.totalTime;
-    (<FinalizeComponent>modal.componentInstance).initialize();
+    // (<FinalizeComponent>modal.componentInstance).initialize();
     (<FinalizeComponent>modal.componentInstance).save.subscribe(data => {
       this.dataFilter();
     });
@@ -169,7 +177,7 @@ export class ReportListComponent implements OnInit {
     const modal: NgbModalRef = this.modalService.open(AddReportComponent, { size: 'lg', container: 'nb-layout' });
     (<AddReportComponent>modal.componentInstance).titleForm = 'New Report';
     (<AddReportComponent>modal.componentInstance).user = this.user;
-    (<AddReportComponent>modal.componentInstance).projects = this.project;
+    (<AddReportComponent>modal.componentInstance).projects = this.projects;
     (<AddReportComponent>modal.componentInstance).save.subscribe(data => {
       this.dataFilter();
     });
@@ -178,7 +186,7 @@ export class ReportListComponent implements OnInit {
   editReport(report) {
     const modal: NgbModalRef = this.modalService.open(AddReportComponent, { size: 'lg', container: 'nb-layout' });
     (<AddReportComponent>modal.componentInstance).report = report;
-    (<AddReportComponent>modal.componentInstance).projects = this.project;
+    (<AddReportComponent>modal.componentInstance).projects = this.projects;
     (<AddReportComponent>modal.componentInstance).titleForm = 'Edit Report';
     (<AddReportComponent>modal.componentInstance).user = this.user;
     (<AddReportComponent>modal.componentInstance).save.subscribe(data => {
@@ -210,7 +218,7 @@ export class ReportListComponent implements OnInit {
       this.user = this.userInfoView;
       this.getProjectList(this.user.id);
     }
-    // this.dataFilter();
+    this.dataFilter();
   }
 
   getProjectList(userid: string) {
@@ -220,13 +228,13 @@ export class ReportListComponent implements OnInit {
 
       this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
         this.dropdownProjectList = projects.data;
-        this.project = projects.data;
+        this.projects = projects.data;
       });
 
     } else {
       this.projectService.getProjectsUser(userid).subscribe((projects: ApiResponse<Project[]>) => {
         this.dropdownProjectList = projects.data;
-        this.project = projects.data;
+        this.projects = projects.data;
       });
     }
   }
@@ -247,10 +255,6 @@ export class ReportListComponent implements OnInit {
     if (this.userAssignedItems.length !== 0)
       userId = this.userAssignedItems[0].id;
 
-    // if (this.rangeDate) {
-    //   startDate = this.rangeDate.start;
-    //   endDate = this.rangeDate.end;
-    // }
     if (!this.userInfo)
       this.getTableData(startDate, endDate, userId, projectId);
     else {
@@ -261,6 +265,19 @@ export class ReportListComponent implements OnInit {
   getTableData(startDate?: Date, endDate?: Date, userId?: string, projectId?: string) {
     this.service.getReports(startDate, endDate, userId, projectId)
       .subscribe((reports: ApiResponse<Report[]>) => {
+        // const reportList: ReportListItem[] = [];
+        // reports.data.forEach((report) => {
+        //   report.tasks.forEach((task) => {
+        //     reportList.push(new ReportListItem(
+        //       report.id,
+        //       report.date,
+        //       report.user,
+        //       task.project,
+        //       task.time
+        //     ));
+        //   });      
+        // });
+        // this.source.load(reportList);
         this.source.load(reports.data);
         this.calcTotalTime(reports.data);
         this.spinner = false;
@@ -270,8 +287,18 @@ export class ReportListComponent implements OnInit {
   calcTotalTime(reports: Report[]) {
     this.totalTime = 0;
     reports.forEach(report => {
-      this.totalTime = this.totalTime + report.getTime();
+      this.totalTime = this.totalTime + this.getTime(report);
     });
+  }
+
+  getTime(report: Report) {
+    let reportTime: number = 0;
+    if (report.tasks) {
+      report.tasks.forEach(task => {
+        reportTime += task.time;
+      });
+    }
+    return reportTime;
   }
 
   formatDate(date: string): string {

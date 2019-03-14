@@ -14,19 +14,12 @@ import {DpDatePickerModule} from 'ng2-date-picker';
 
 
 import { UsersComponent } from './users/users.component';
-import { RoleInfoComponent } from './role-info/role-info.component';
-import { AddRoleComponent } from './add-role/add-role.component';
-import { UserRoleComponent } from './user-role/user-role.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserPaymentComponent } from './user-payment/user-payment.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 
-import { ProjectInfoComponent } from './../projects/project-info/project-info.component';
-import { RoleActionsComponent } from './role-actions.component';
 import { UserActionsComponent } from './user-actions.component';
-
-import { UserRoleService } from './../../@core/data/user-role.service';
 import { UserService } from './../../@core/data/users.service';
 
 import { TokenInterceptor } from '../../@core/utils/token.interceptor';
@@ -50,31 +43,18 @@ import { ProjectCardComponent } from './project-card/project-card.component';
     UserActionsComponent,
     AddUserComponent,
     UserListComponent,
-    UserRoleComponent,
-    RoleActionsComponent,
-    AddRoleComponent,
-    RoleInfoComponent,
     UserInfoComponent,
     UsersComponent,
     UserPaymentComponent,
     UserCardComponent,
     ProjectCardComponent,
-
-
-
   ],
   entryComponents: [
     UserActionsComponent,
-    RoleInfoComponent,
-    RoleActionsComponent,
     AddUserComponent,
-    AddRoleComponent,
-    UserPaymentComponent,
-    
-
+    UserPaymentComponent
   ],
   providers: [
-    UserRoleService,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

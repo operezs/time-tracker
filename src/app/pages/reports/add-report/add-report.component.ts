@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NbDateService } from '@nebular/theme';
 
-import { Report } from '../../../@core/models/report';
+import { Report, IReport } from '../../../@core/models/report';
 import { ReportService } from '../../../@core/data/report.service';
 import { ProjectService } from '../../../@core/data/project.service';
 import { Project } from '../../../@core/models/project';
@@ -56,12 +56,14 @@ export class AddReportComponent implements OnInit {
 
   ngOnInit() {
     this.getItemsDropdown();
+    this.reportDate = new Date();
     if (!this.report) {
       this.report = new Report(this.user, new Date());
+    } else {
+      this.reportDate = new Date(this.report.date);
     }
-    if (!this.newTask) {
-      this.newTask = new Task();
-    }
+    this.newTask = new Task();
+
     // if (this.report.id) {
     //     this.userName = this.report.user.firstName;
     // } else {
@@ -75,33 +77,32 @@ export class AddReportComponent implements OnInit {
 
   getItemsDropdown() {
     this.dropdownList = this.projects;
-    // if (this.projects)
-    //    this.projectAssignedItems = [this.projects];
   }
 
-  // reportAssignedMultiSelect() {
-  //       this.projects = this.selectedProjects[0].id;
-  // }
-
   onSubmit() {
-    // this.reportAssignedMultiSelect();
     this.report.date = this.reportDate;
-    console.log(this.selectedProjects[0]);
+    const createReport: IReport = new IReport(this.report);
     if (this.report.id) {
-      // this.projectAssignedItems[0].id = this.report.user.id;
-      // this.report.user = this.selectedProjects[0].id;
-      this.reportService.updateReport(this.report).subscribe(data => {
+      this.reportService.updateReport(createReport).subscribe(data => {
         this.closeModal();
         this.onSave();
       });
     } else {
-      // this.projectAssignedItems[0].id = this.user.id;
-      // this.report.user = this.selectedProjects[0].id;
-      this.reportService.createReport(this.report).subscribe(data => {
+      this.reportService.createReport(createReport).subscribe(data => {
         this.closeModal();
         this.onSave();
       });
     }
+  }
+
+  getTime() {
+    let reportTime: number = 0;
+    if (this.report.tasks) {
+      this.report.tasks.forEach(task => {
+        reportTime += task.time;
+      });
+    }
+    return reportTime;
   }
 
   addTask() {

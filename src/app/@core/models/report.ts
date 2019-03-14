@@ -1,6 +1,6 @@
 import { User } from './user';
-import { Project } from './project';
-import { Task } from './task';
+import { Task, ITask } from './task';
+
 export class Report {
     id: string;
     date: Date;
@@ -16,12 +16,37 @@ export class Report {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+}
 
-    getTime() {
-        let totalTime: number = 0;
-        this.tasks.forEach(task => {
-            totalTime += task.time;
+export class IReport {
+    id: string;
+    date: Date;
+    tasks: ITask[];
+    user: String;
+
+    constructor(report: Report) {
+        this.id = report.id;
+        this.user = report.user.id;
+        this.date = report.date;
+        this.tasks = [];
+        report.tasks.forEach((task: Task) => {
+            this.tasks.push(new ITask(task));
         });
-        return totalTime;
     }
 }
+/*
+export class ReportListItem {
+    id: string;
+    date: Date;
+    user: User;
+    project: Project;    
+    time: number;
+
+    constructor(id: string, date: Date, user: User, project: Project, time: number) {
+        this.id = id;
+        this.date = date;
+        this.user = user;
+        this.project = project;
+        this.time = time;
+    }
+}*/

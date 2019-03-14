@@ -4,6 +4,13 @@
 <div class="modal-body">
   <form (ngSubmit)="onSubmit()" #finalizeForm="ngForm">
     <div class="form-group">
+      <select class="form-control" [(ngModel)]="selectedOption" (change)="changeMonth()" name="month">
+        <option [value]="i" *ngFor="let option of monthOptions;let i=index">
+          {{months[option.month]}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
       <label for="time">Time:</label>
       <div>
         <input placeholder="Time in hores" type="number" class="form-control" id="time" name="time"
@@ -20,17 +27,17 @@
     <div class="form-group" *ngIf="user.internet">
       <label for="internet">Internet:</label>
       <div>
-          <input placeholder="Internet expenses" type="number" class="form-control" id="internet" name="internet"
+        <input placeholder="Internet expenses" type="number" class="form-control" id="internet" name="internet"
           (change)="recalculateTotal()" [(ngModel)]="invoice.internet" required>
       </div>
     </div>
     <br>
     <div class="form-group">
-        <label for="total">Total CUC:</label>
-        <div>
-            <input placeholder="Total CUC" type="number" class="form-control" id="total" name="total"
-            [(ngModel)]="invoice.totalCUC" disabled>
-        </div>
+      <label for="total">Total CUC:</label>
+      <div>
+        <input placeholder="Total CUC" type="number" class="form-control" id="total" name="total"
+          [(ngModel)]="invoice.totalCUC" disabled>
+      </div>
     </div>
 
     <div class="modal-footer">

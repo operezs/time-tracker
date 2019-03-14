@@ -28,7 +28,7 @@ export class ReportListComponent implements OnInit {
     'June', 'July', 'August', 'September',
     'October', 'November', 'December'
   ];
-  
+
   settings = {
     hideSubHeader: true,
     actions: false,
@@ -46,7 +46,7 @@ export class ReportListComponent implements OnInit {
           return date;
         }
       },
-      users: {
+      user: {
         title: 'Developer Name',
         type: 'string',
         filter: true,
@@ -55,7 +55,7 @@ export class ReportListComponent implements OnInit {
           return name;
         }
       },
-      projects: {
+      /*project: {
         title: 'Project',
         type: 'string',
         filter: true,
@@ -63,11 +63,18 @@ export class ReportListComponent implements OnInit {
           let name = `${value.projectName}`;
           return name;
         }
-      },
-      time: {
+      },*/
+      tasks: {
         title: 'Time Work',
         type: 'number',
         filter: true,
+        valuePrepareFunction: (value) => {
+          let reportTime = 0;
+          value.forEach(task => {
+            reportTime += task.time;
+          });
+          return reportTime;
+        }
       }
     },
   };
@@ -77,7 +84,7 @@ export class ReportListComponent implements OnInit {
   constructor(private service: ReportService,
     protected dateService: NbDateService<Date>) { }
 
-  
+
   ngOnInit() {
     this.getData();
   }
@@ -92,6 +99,19 @@ export class ReportListComponent implements OnInit {
   getTableData(startDate?: Date, endDate?: Date, userId?: string) {
     this.service.getReports(startDate, endDate, userId)
       .subscribe((reports: ApiResponse<Report[]>) => {
+        // const reportList: ReportListItem[] = [];
+        // reports.data.forEach((report) => {
+        //   report.tasks.forEach((task) => {
+        //     reportList.push(new ReportListItem(
+        //       report.id,
+        //       report.date,
+        //       report.user,
+        //       task.project,
+        //       task.time
+        //     ));
+        //   });      
+        // });
+        // this.source.load(reportList);
         this.source.load(reports.data);
         this.calcTotalTime(reports.data);
         this.spinner = false;
@@ -100,9 +120,19 @@ export class ReportListComponent implements OnInit {
 
   calcTotalTime(reports: Report[]) {
     this.totalTime = 0;
-    reports.forEach(report => {
-      this.totalTime = this.totalTime + report.getTime();
+    reports.forEach((report: Report) => {
+      this.totalTime = this.totalTime +  + this.getTime(report);
     });
+  }
+
+  getTime(report: Report) {
+    let reportTime: number = 0;
+    if (report.tasks) {
+      report.tasks.forEach(task => {
+        reportTime += task.time;
+      });
+    }
+    return reportTime;
   }
 
   formatDate(date: string): string {

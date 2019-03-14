@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
 
-import { Report} from '../models/report';
+import { Report, IReport } from '../models/report';
 import { ApiResponse } from '../models/response';
 
 @Injectable()
@@ -23,8 +23,8 @@ export class ReportService {
   getReports(startDate?: Date, endDate?: Date, userId?: string, projectId?: string) {
     let queryParams = '';
     if (startDate && endDate) {
-       queryParams += queryParams.length > 0 ? '&' : '?';
-       queryParams += `startDate=${startDate}&endDate=${endDate}`;
+      queryParams += queryParams.length > 0 ? '&' : '?';
+      queryParams += `startDate=${startDate}&endDate=${endDate}`;
     }
     if (projectId) {
       queryParams += queryParams.length > 0 ? '&' : '?';
@@ -33,33 +33,25 @@ export class ReportService {
     if (userId) {
       queryParams += queryParams.length > 0 ? '&' : '?';
       queryParams += `userId=${userId}`;
-    }    
-
-    if (queryParams) {
-        return this.http.get<ApiResponse<Report[]>>(`${this.baseUrl}${queryParams}`);
     }
-    else
-        return this.http.get<ApiResponse<Report[]>>(`${this.baseUrl}`);
-            
+
+    return this.http.get<ApiResponse<Report[]>>(`${this.baseUrl}`);
   }
 
   getReport(id: string) {
     return this.http.get<ApiResponse<Report>>(`${this.baseUrl}/${id}`);
   }
 
-  createReport(report: Report) {
+  createReport(report: IReport) {
     return this.http.post(this.baseUrl, report);
   }
 
-  updateReport(report: Report) {
+  updateReport(report: IReport) {
     return this.http.put(`${this.baseUrl}/${report.id}`, report);
   }
 
   deleteReport(id: string) {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
-
-  
-
 }
 

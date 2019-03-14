@@ -3,25 +3,29 @@
     <div>Invoices</div>
     <br>
     <div class="row">
-
-
-      <div class="col-md-10">
-        <div class="row ">
-
-          <div class="col-md-3">
-            <input nbInput
-               placeholder="Select month"
-               [nbDatepicker]="formpicker">
-            <nb-datepicker #formpicker></nb-datepicker>
-          </div>
-          <div class="col-md-2">
-            <button type="button" class="btn btn-success" (click)="dataFilter()">
-              Filter
-            </button>
-          </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="selectedMonth" name="month">
+              <option [value]="option.value" *ngFor="let option of monthOptions">
+                  {{option.name}}
+               </option>
+          </select>
         </div>
       </div>
-
+      <div class="col-md-2">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="selectedYear" name="year">
+              <option [value]="option.value" *ngFor="let option of yearOptions">
+                  {{option.name}}
+               </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <button type="button" class="btn btn-success" (click)="dataFilter()">
+          Filter
+        </button>
+      </div>
     </div>
 
   </nb-card-header>

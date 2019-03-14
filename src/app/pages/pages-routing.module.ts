@@ -7,7 +7,6 @@ import { TrackerHomeComponent } from './tracker-home/tracker-home.component';
 import { UsersComponent } from './users/users/users.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { ReportListComponent } from './reports/report-list/report-list.component';
-import { UserRoleComponent } from './users/user-role/user-role.component';
 import { AuthGuardAdmin } from './../@core/data/auth-guard-admin.service';
 import { InvoicesComponent } from './reports/invoices/invoices.component';
 import { ArchivesComponent } from './archives/archives/archives.component';
@@ -54,12 +53,7 @@ const routes: Routes = [{
       path: 'users',
       canActivate: [AuthGuardAdmin],
       component: UsersComponent,
-    }, 
-    {
-      path: 'users/user-role',
-      canActivate: [AuthGuardAdmin],
-      component: UserRoleComponent,
-    }, 
+    },
     {
       path: 'projects',
       // canActivate: [AuthGuardAdmin],

@@ -28,10 +28,9 @@ export class InvoiceComponent implements OnInit {
     private activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    // this.invoiceService.getInvoice(this.user.id, this.month, this.year).subscribe((invoice: ApiResponse<Invoice>) => {
-    //   this.invoice = invoice.data;
-    // });
-    this.invoice = new Invoice(this.user, 192, 15, 195);
+    this.invoiceService.getInvoice(this.user.id, this.month, this.year).subscribe((invoice: ApiResponse<Invoice>) => {
+      this.invoice = invoice.data;
+    });
   }
 
   getMonthName(index: number) {

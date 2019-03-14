@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { GlobalService } from './global.service';
-import { Invoice } from '../models/invoice';
+import { Invoice, IInvoice } from '../models/invoice';
 import { ApiResponse } from '../models/response';
 
 @Injectable({
@@ -13,25 +13,30 @@ export class InvoiceService {
   private baseUrl: string;
 
   constructor(private http: HttpClient, private global: GlobalService) {
-    this.baseUrl = `${this.global.apiUrl()}reports/invoices`;
+    this.baseUrl = `${this.global.apiUrl()}invoices`;
+  }
+
+  createInvoice(invoice: IInvoice) {
+    return this.http.post(this.baseUrl, invoice);
   }
 
   getInvoice(userId: string, month: number, year: number) {
     let queryParams = `?userId=${userId}&month=${month}&year=${year}`;
-    return this.http.get<ApiResponse<Invoice>>(`${this.baseUrl}/user${queryParams}`);
+    return this.http.get<ApiResponse<Invoice>>(`${this.baseUrl}/userDate${queryParams}`);
   }
 
   getInvoices(month?: number, year?: number) {
     let queryParams = '';
     if (month) {
       queryParams += queryParams.length > 0 ? '&' : '?';
-      queryParams += `month=${month}&year=${year}`;
+      queryParams += `month=${month}`;
     }
 
-    if (queryParams) {
-      return this.http.get<ApiResponse<Invoice[]>>(`${this.baseUrl}${queryParams}`);
-    } else {
-      return this.http.get<ApiResponse<Invoice[]>>(`${this.baseUrl}`);
+    if (year) {
+      queryParams += queryParams.length > 0 ? '&' : '?';
+      queryParams += `year=${year}`;
     }
+
+    return this.http.get<ApiResponse<Invoice[]>>(`${this.baseUrl}/date${queryParams}`);
   }
 }
