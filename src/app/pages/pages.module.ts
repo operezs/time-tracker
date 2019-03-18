@@ -13,6 +13,7 @@ import { ReportsModule } from './reports/reports.module';
 import { ProjectsModule } from './projects/projects.module';
 import { FormsModule } from '@angular/forms';
 import { ArchivesModule } from './archives/archives.module';
+import { MissionsModule } from './missions/missions.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -29,7 +30,8 @@ const PAGES_COMPONENTS = [
     UsersModule,
     ProjectsModule,
     ReportsModule,
-    ArchivesModule
+    ArchivesModule,
+    MissionsModule
   ],
   declarations: [
     ...PAGES_COMPONENTS,

@@ -4,7 +4,7 @@
   </nb-card-header>
      
   <nb-card-body>
-      <div class = "row" *ngIf="user && role"> 
+      <div class = "row" *ngIf="user"> 
                 <div class = "col-md-4">
                     <label>
                         <i class="nb-person icon-size"></i>
@@ -15,7 +15,7 @@
                     <label>
                         <i class="nb-gear icon-size"></i>
                         <strong class = "title"> Role:  </strong> 
-                        <strong class = "value">{{role.roleName}}</strong>
+                        <strong class = "value">{{role.role}}</strong>
                     </label>
                 </div>              
                 
@@ -25,12 +25,12 @@
                         <strong class = "title"> Last name:  </strong>
                         <strong class = "value">{{user.lastName}}</strong>
                     </label>
-                    <hr>
+                    <!-- <hr>
                     <label>
                         <i class="nb-compose icon-size"></i>                        
                         <strong class = "title"> Work mode:  </strong>
                         <strong class = "value">{{role.workMode}}</strong>
-                    </label>
+                    </label> -->
                 </div>              
     
                 <div class = "col-md-4 ">            
@@ -43,7 +43,7 @@
                     <label>
                         <i class="nb-coffee-maker icon-size"></i>                        
                         <strong class = "title"> Basic salary:  </strong>
-                        <strong class = "value">{{role.basicSalary}}</strong>                    
+                        <strong class = "value">{{user.salary}}</strong>         
                     </label>
                 </div>  
       </div>

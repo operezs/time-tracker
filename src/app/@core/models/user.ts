@@ -1,5 +1,3 @@
-import { Role } from './role';
-
 export class User {
     id: string;
     firstName: string;
@@ -22,7 +20,7 @@ export class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.role = role ? role : 'Developer';
         this.mobile = mobile;
         this.internet = internet;
         this.salary = salary;
@@ -30,5 +28,11 @@ export class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+}
+
+export class UserMission {
+    id: string;
+    name: string;
+    time: string;
 }
 

@@ -1,9 +1,22 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { GlobalService } from './global.service';
+import { ApiResponse } from '../models/response';
+import { Mission } from '../models/mission';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MissionService {
 
-  constructor() { }
+  private baseUrl: string;
+
+  constructor(private http: HttpClient,
+    private global: GlobalService) {
+    this.baseUrl = `${this.global.apiUrl()}missions`;
+  }
+
+  getMissions(startDate: Date, endDate: Date) {
+    let queryParams = `?startDate=${startDate}&endDate=${endDate}`;
+    return this.http.get<ApiResponse<Mission[]>>(`${this.baseUrl}${queryParams}`);
+  }
+
 }

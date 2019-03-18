@@ -10,7 +10,7 @@ import { Role } from './../../../@core/models/role';
 export class UserCardComponent implements OnInit {
   
   @Input() user: User;
-  @Input() role: Role;
+  // @Input() role: Role;
 
   username: string = '';
   

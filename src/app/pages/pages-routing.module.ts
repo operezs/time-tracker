@@ -10,7 +10,7 @@ import { ReportListComponent } from './reports/report-list/report-list.component
 import { AuthGuardAdmin } from './../@core/data/auth-guard-admin.service';
 import { InvoicesComponent } from './reports/invoices/invoices.component';
 import { ArchivesComponent } from './archives/archives/archives.component';
-import { MissionsComponent } from './reports/missions/missions.component';
+import { MissionsComponent } from './missions/missions.component';
 
 
 
@@ -37,16 +37,7 @@ const routes: Routes = [{
       component: MissionsComponent,
     },
     {
-      path: 'reports/archives-users',
-      canActivate: [AuthGuardAdmin],
-      component: ArchivesComponent,
-    },    
-    {
       path: 'reports/archives',
-      component: ArchivesComponent,
-    },
-    {
-      path: 'reports/archives-reports',
       component: ArchivesComponent,
     },
     {
@@ -61,7 +52,7 @@ const routes: Routes = [{
     }, 
 
 
-
+/*
 
 
     // theme  
@@ -99,7 +90,7 @@ const routes: Routes = [{
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
-  }, /* {
+  }, {
     path: '**',
     component: NotFoundComponent,
   } */],

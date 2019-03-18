@@ -3,6 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '../../../@core/models/user';
 import { Invoice, IInvoice } from '../../../@core/models/invoice';
 import { InvoiceService } from '../../../@core/data/invoice.service';
+import { ReportService } from '../../../@core/data/report.service';
+import { ApiResponse } from '../../../@core/models/response';
 
 @Component({
   selector: 'ngx-finalize',
@@ -15,13 +17,14 @@ export class FinalizeComponent implements OnInit {
   invoice: Invoice;
   time: number;
   @Output() save = new EventEmitter();
-
+  spinner: boolean;
   selectedOption: number;
   months = ["January", "February", "March", "April", "May", "June", 
   "July", "August", "September", "October", "November", "December"];
   monthOptions = [];
 
   constructor(private activeModal: NgbActiveModal,
+    private reportService: ReportService,
     private invoiceService: InvoiceService) { }
 
   ngOnInit() {
@@ -37,7 +40,7 @@ export class FinalizeComponent implements OnInit {
     if(!this.invoice) {
       this.selectedOption = 0;
       this.invoice = new Invoice(this.user, 0, 0, 0, this.monthOptions[0].month + 1, this.monthOptions[0].year);
-      this.recalculateTotal();
+      this.changeMonth();
     }
   }
 
@@ -49,21 +52,26 @@ export class FinalizeComponent implements OnInit {
     this.save.emit();
   }
 
-  // initialize() {
-  //   if(!this.invoice) {
-  //     this.selectedOption = 0;
-  //     this.invoice = new Invoice(this.user, 0, 0, 0, this.monthOptions[0].month + 1, this.monthOptions[0].year);
-  //     this.recalculateTotal();
-  //   }
-  // }
-
   changeMonth() {
     this.invoice.month = this.monthOptions[this.selectedOption].month + 1;
     this.invoice.year = this.monthOptions[this.selectedOption].year;
+    this.spinner = true;
+    const startDate: Date = new Date(this.monthOptions[this.selectedOption].year, this.monthOptions[this.selectedOption].month, 1);
+    const endDate: Date = new Date(this.monthOptions[this.selectedOption].year, this.monthOptions[this.selectedOption].month + 1, 0);
+    this.getTime(startDate, endDate);
+  }
+
+  getTime(startDate?: Date, endDate?: Date) {
+    this.reportService.getTotalHours(startDate, endDate, this.user.id)
+      .subscribe((total: ApiResponse<number>) => {
+        this.invoice.time = total.data;
+        this.recalculateTotal();
+        this.spinner = false;
+      });
   }
 
   recalculateTotal() {
-    this.invoice.totalCUC = this.user.salary ? this.user.salary : 0 / 180.00 * this.invoice.time + this.invoice.extra + this.invoice.internet;
+    this.invoice.totalCUC = this.user.salary / 180.00 * this.invoice.time + this.invoice.extra + this.invoice.internet;
   }
 
   onSubmit() {

@@ -22,7 +22,6 @@ export class UserInfoComponent implements OnInit {
 
   @Input() user: User;
   @Output() projects: Project[] = [];
-  @Output() role: Role;
   @Output() userInfo: boolean;
   @Output() userMonthWork = new Map();
 
@@ -126,7 +125,6 @@ export class UserInfoComponent implements OnInit {
     (<UserPaymentComponent>modal.componentInstance).user = this.user;
     (<UserPaymentComponent>modal.componentInstance).userMonthWork = this.userMonthWork;
     (<UserPaymentComponent>modal.componentInstance).projects = this.projects;
-    (<UserPaymentComponent>modal.componentInstance).role = this.role;
   }
 
   cleanRangeDate() {
