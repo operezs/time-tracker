@@ -28,7 +28,6 @@ export class ArchivesComponent implements OnInit {
   }
 
   selectUser(user: User) {
-    console.log(JSON.stringify(user));
     this.selectedUser = user;
   }
 

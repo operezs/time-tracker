@@ -38,6 +38,7 @@ const routes: Routes = [{
     },
     {
       path: 'reports/archives',
+      // canActivate: [AuthGuardAdmin],
       component: ArchivesComponent,
     },
     {
@@ -47,7 +48,7 @@ const routes: Routes = [{
     },
     {
       path: 'projects',
-      // canActivate: [AuthGuardAdmin],
+      canActivate: [AuthGuardAdmin],
       component: ProjectListComponent,
     }, 
 

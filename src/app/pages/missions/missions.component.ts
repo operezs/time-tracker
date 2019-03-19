@@ -6,31 +6,28 @@ import { Mission } from '../../@core/models/mission';
 @Component({
   selector: 'ngx-missions',
   template: `
-  <div class="row">
-    <div class="col-md-12">
-      <nb-card size="large">
+      <nb-card size="large" [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
         <nb-card-header>
           <div>Missions</div>
         </nb-card-header>
         <nb-card-body>
+          <nb-alert *ngIf="!missions || missions.length == 0" status="info">There are no data related to your request ...</nb-alert>
           <ngx-mission-list *ngIf="missions" [missions]="missions"></ngx-mission-list>
         </nb-card-body>
-      </nb-card>
-    </div>
-  </div>`
+      </nb-card>`
 })
 export class MissionsComponent implements OnInit {
 
-  missions: Mission[]
+  missions: Mission[];
+  spinner = false;
 
   constructor(private missionService: MissionService) { }
 
   ngOnInit() {
-    const date = new Date(), year = date.getFullYear(), month = date.getMonth();
-    const startDate: Date = new Date(year, month, 1);
-    const endDate: Date = new Date(year, month + 1, 0);
-    this.missionService.getMissions(startDate, endDate).subscribe((missions: ApiResponse<Mission[]>) => {
+    this.spinner = true;
+    this.missionService.getMissions().subscribe((missions: ApiResponse<Mission[]>) => {
       this.missions = missions.data;
+      this.spinner = false;
     });
   }
 

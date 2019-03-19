@@ -27,4 +27,12 @@ export class ArchiveService {
     
     return this.http.get<ApiResponse<Archive[]>>(`${this.baseUrl}${queryParams}`);
   }
+
+  getCurrentMonth() {
+    return this.http.get<ApiResponse<any>>(`${this.baseUrl}/current`);
+  }
+
+  createArchive() {
+    return this.http.post<ApiResponse<Number>>(this.baseUrl, {});
+  }
 }

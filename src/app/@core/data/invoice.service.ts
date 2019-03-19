@@ -20,8 +20,12 @@ export class InvoiceService {
     return this.http.post(this.baseUrl, invoice);
   }
 
-  getInvoice(userId: string, month: number, year: number) {
-    let queryParams = `?userId=${userId}&month=${month}&year=${year}`;
+  getInvoice(userId: string, month?: number, year?: number) {
+    let queryParams = `?userId=${userId}`;
+
+    if (month || year) {
+      queryParams += `&month=${month}&year=${year}`;
+    }
     return this.http.get<ApiResponse<Invoice>>(`${this.baseUrl}/userDate${queryParams}`);
   }
 

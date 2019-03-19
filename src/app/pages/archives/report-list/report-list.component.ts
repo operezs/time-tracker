@@ -22,6 +22,7 @@ export class ReportListComponent implements OnInit {
   @Input() user: User;
   @Input() month: number;
   @Input() year: number;
+  @Output() back = new EventEmitter();
   spinner: boolean;
   months: string[] = [
     'January', 'February', 'March', 'April', 'May',
@@ -91,27 +92,14 @@ export class ReportListComponent implements OnInit {
 
   getData() {
     this.spinner = true;
-    const startDate: Date = new Date(this.year, this.month, 1);
-    const endDate: Date = new Date(this.year, this.month + 1, 0);
-    this.getTableData(startDate, endDate, this.user.id);
+    const startDate: Date = new Date(this.year, this.month - 1, 1);
+    const endDate: Date = new Date(this.year, this.month, 1);
+    this.getTableData(this.user.id, startDate, endDate);
   }
 
-  getTableData(startDate?: Date, endDate?: Date, userId?: string) {
-    this.service.getReports(startDate, endDate, userId)
+  getTableData(userId?: string, startDate?: Date, endDate?: Date) {
+    this.service.getReportsByDate(userId, startDate, endDate)
       .subscribe((reports: ApiResponse<Report[]>) => {
-        // const reportList: ReportListItem[] = [];
-        // reports.data.forEach((report) => {
-        //   report.tasks.forEach((task) => {
-        //     reportList.push(new ReportListItem(
-        //       report.id,
-        //       report.date,
-        //       report.user,
-        //       task.project,
-        //       task.time
-        //     ));
-        //   });      
-        // });
-        // this.source.load(reportList);
         this.source.load(reports.data);
         this.calcTotalTime(reports.data);
         this.spinner = false;
@@ -121,7 +109,7 @@ export class ReportListComponent implements OnInit {
   calcTotalTime(reports: Report[]) {
     this.totalTime = 0;
     reports.forEach((report: Report) => {
-      this.totalTime = this.totalTime +  + this.getTime(report);
+      this.totalTime = this.totalTime + + this.getTime(report);
     });
   }
 
@@ -141,5 +129,9 @@ export class ReportListComponent implements OnInit {
 
   getMonthName(index: number) {
     return this.months[index - 1] || 'NULL';
+  }
+
+  goBack() {
+    this.back.emit();
   }
 }

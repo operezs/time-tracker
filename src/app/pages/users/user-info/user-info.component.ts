@@ -77,7 +77,7 @@ export class UserInfoComponent implements OnInit {
   getValues(startDate?: Date, endDate?: Date, projectId?: string) {
     this.projects = [];
     this.projectReportId.clear();
-    this.reportService.getReports(startDate, endDate, projectId, this.user.id).subscribe((reports: ApiResponse<Report[]>) => {
+    this.reportService.getReportsByDate(this.user.id, startDate, endDate).subscribe((reports: ApiResponse<Report[]>) => {
       this.reports = reports.data;
       this.reports.forEach(report => {
         report.tasks.forEach(task => {

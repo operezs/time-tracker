@@ -1,6 +1,6 @@
 <nb-card [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
   <nb-card-header>
-    <div>{{month}} Report</div>
+    <div>{{getMonth()}} Report</div>
     <br>
     <div class="row">
       <div class="col-md-9">
@@ -45,12 +45,14 @@
       <div class="col-md-1">
       </div>
       <div class="col-md-1">
-        <button type="button" class="btn btn-outline-danger btn-icon" (click)="finalizeMonth()" *ngIf="!userInfo">
+        <button type="button" class="btn btn-outline-danger btn-icon" nbTooltip="Generate invoice"
+        nbTooltipStatus="danger" (click)="generateInvoice()" *ngIf="!userInfo && (!user || user.role !== 'Admin')">
           <i class="fa fa-check"></i>
         </button>
       </div>
       <div class="col-md-1">
-        <button type="button" class="btn btn-outline-primary btn-icon" (click)="openAddReportModal()" *ngIf="!userInfo">
+        <button type="button" class="btn btn-outline-primary btn-icon" nbTooltip="Add report"
+        nbTooltipStatus="primary" (click)="openAddReportModal()" *ngIf="!userInfo && (!user || user.role !== 'Admin')">
           <i class="fa fa-plus"></i>
         </button>
       </div>

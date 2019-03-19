@@ -3,13 +3,13 @@
 </div>
 <div class="modal-body">
   <form (ngSubmit)="onSubmit()" #finalizeForm="ngForm">
-    <div class="form-group">
+    <!-- <div class="form-group">
       <select class="form-control" [(ngModel)]="selectedOption" (change)="changeMonth()" name="month">
         <option [value]="i" *ngFor="let option of monthOptions;let i=index">
           {{months[option.month]}}
         </option>
       </select>
-    </div>
+    </div> -->
     <div class="form-group">
       <label for="time">Time:</label>
       <div>

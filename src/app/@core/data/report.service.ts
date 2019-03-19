@@ -20,30 +20,18 @@ export class ReportService {
     this.baseUrl = `${this.global.apiUrl()}reports`;
   }
 
-  getTotalHours(startDate?: Date, endDate?: Date, userId?: string, projectId?: string) {
+  getTotalHours(userId?: string) {
     let queryParams = '';
-    if (startDate && endDate) {
-      queryParams += queryParams.length > 0 ? '&' : '?';
-      queryParams += `startDate=${startDate}&endDate=${endDate}`;
-    }
-    if (projectId) {
-      queryParams += queryParams.length > 0 ? '&' : '?';
-      queryParams += `projectId=${projectId}`;
-    }
     if (userId) {
       queryParams += queryParams.length > 0 ? '&' : '?';
       queryParams += `userId=${userId}`;
     }
 
-    return this.http.get<ApiResponse<number>>(`${this.baseUrl}/totalHours`);
+    return this.http.get<ApiResponse<number>>(`${this.baseUrl}/totalHours${queryParams}`);
   }
 
-  getReports(startDate?: Date, endDate?: Date, userId?: string, projectId?: string) {
+  getReports(userId?: string, projectId?: string) {
     let queryParams = '';
-    if (startDate && endDate) {
-      queryParams += queryParams.length > 0 ? '&' : '?';
-      queryParams += `startDate=${startDate}&endDate=${endDate}`;
-    }
     if (projectId) {
       queryParams += queryParams.length > 0 ? '&' : '?';
       queryParams += `projectId=${projectId}`;
@@ -53,7 +41,22 @@ export class ReportService {
       queryParams += `userId=${userId}`;
     }
 
-    return this.http.get<ApiResponse<Report[]>>(`${this.baseUrl}`);
+    return this.http.get<ApiResponse<Report[]>>(`${this.baseUrl}${queryParams}`);
+  }
+
+  getReportsByDate(userId?: string, startDate?: Date, endDate?: Date) {
+    let queryParams = '';
+    if (startDate && endDate) {
+      queryParams += queryParams.length > 0 ? '&' : '?';
+      queryParams += `startDate=${startDate}&endDate=${endDate}`;
+    }
+
+    if (userId) {
+      queryParams += queryParams.length > 0 ? '&' : '?';
+      queryParams += `userId=${userId}`;
+    }
+
+    return this.http.get<ApiResponse<Report[]>>(`${this.baseUrl}${queryParams}`);
   }
 
   getReport(id: string) {

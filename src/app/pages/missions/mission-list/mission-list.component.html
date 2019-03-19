@@ -1,2 +1,18 @@
-<ngx-mission-item [title]="mission.projectName" [users]="mission.users" *ngFor="let mission of missions">
-</ngx-mission-item>
+<!-- <ngx-mission-item [title]="mission.projectName" [users]="mission.users" *ngFor="let mission of missions">
+</ngx-mission-item> -->
+
+<nb-accordion>
+    <nb-accordion-item *ngFor="let mission of missions">
+        <nb-accordion-item-header>
+            <div class="project-initials">
+                {{getProjectInitials(mission.projectName)}}
+            </div>
+            {{mission.projectName}}
+            <span class="badge badge-primary badge-pill">{{getTime(mission)}}</span>
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+            <ngx-mission-item [user]="user" *ngFor="let user of mission.users"></ngx-mission-item>
+            <!-- <ng2-smart-table [settings]="settings" [source]="getTableData(mission)"></ng2-smart-table> -->
+        </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>

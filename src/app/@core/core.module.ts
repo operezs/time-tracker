@@ -47,8 +47,8 @@ export const NB_CORE_PROVIDERS = [
           key: 'data.token', // this parameter tells where to look for the token
         },
          // TODO: coger de global service
-        baseEndpoint: ' http://ec2-35-180-192-236.eu-west-3.compute.amazonaws.com/api/v1/',
-        // baseEndpoint: ' http://localhost:8000/api/v1/',
+        // baseEndpoint: 'http://ec2-35-180-192-236.eu-west-3.compute.amazonaws.com/api/v1/',
+        baseEndpoint: 'http://localhost:8000/api/v1/',
         login: {
           alwaysFail: false,
           endpoint: 'login',

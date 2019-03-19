@@ -16,6 +16,9 @@ import { UserService } from '../../../@core/data/users.service';
 import { User } from '../../../@core/models/user';
 import { FinalizeComponent } from '../finalize/finalize.component';
 import { getLocaleTimeFormat } from '@angular/common';
+import { InvoiceService } from '../../../@core/data/invoice.service';
+import { ArchiveService } from '../../../@core/data/archive.service';
+import { Invoice } from '../../../@core/models/invoice';
 
 @Component({
   selector: 'ngx-report-list',
@@ -34,21 +37,18 @@ export class ReportListComponent implements OnInit {
   admin = false;
   user: User;
   projects: Project[];
-  month: string;
-
+  month: any;
+  invoice: Invoice;
   spinner: boolean;
+
+  months: string[] = [
+    'January', 'February', 'March', 'April', 'May',
+    'June', 'July', 'August', 'September',
+    'October', 'November', 'December'
+  ];
 
   @Input() userInfoView: User;
   @Input() userInfo: boolean;
-
-  // @Input() startDate: Date;
-  // @Input() endDate: Date;
-
-
-  // // Date Piker
-  // min: Date;
-  // max: Date;
-  // rangeDate: any;
 
   projectAssignedItems = [];
   dropdownProjectList = [];
@@ -104,15 +104,6 @@ export class ReportListComponent implements OnInit {
           return name;
         }
       },
-      // tasks: {
-      //   title: 'Projects',
-      //   type: 'string',
-      //   filter: true,
-      //   valuePrepareFunction: (value) => {
-      //     let name = `${value.projectName}`;
-      //     return name;
-      //   }
-      // },
       tasks: {
         title: 'Time Work',
         type: 'number',
@@ -157,20 +148,40 @@ export class ReportListComponent implements OnInit {
     private modalService: NgbModal,
     private projectService: ProjectService,
     private userService: UserService,
-    protected dateService: NbDateService<Date>) {
-    this.month = new Date().toLocaleString('en-us', { month: 'long' });
+    protected dateService: NbDateService<Date>,
+    private invoiceService: InvoiceService,
+    private archiveService: ArchiveService) {
     // this.min = this.dateService.addDay(this.dateService.today(), -5);
     // this.max = this.dateService.addDay(this.dateService.today(), 5);
   }
 
-  finalizeMonth() {
+  generateInvoice() {
+    this.spinner = true;
+    this.invoiceService.getInvoice(this.user.id).subscribe((invoice: ApiResponse<Invoice>) => {
+      this.invoice = invoice.data;
+      this.spinner = false;
+      this.openGenerateInvoiceModal();
+    },
+    error => {
+      this.archiveService.getCurrentMonth().subscribe((current: ApiResponse<any>) => {
+        this.service.getTotalHours(this.user.id).subscribe((totalHours: ApiResponse<number>) => {
+          this.invoice = new Invoice(this.user, totalHours.data, 0, 0, current.data.month, current.data.year);
+          this.spinner = false;
+          this.openGenerateInvoiceModal();
+        });
+      });
+    });    
+  }
+
+  openGenerateInvoiceModal() {
     const modal: NgbModalRef = this.modalService.open(FinalizeComponent, { size: 'sm', container: 'nb-layout' });
     (<FinalizeComponent>modal.componentInstance).user = this.user;
     (<FinalizeComponent>modal.componentInstance).time = this.totalTime;
+    (<FinalizeComponent>modal.componentInstance).invoice = this.invoice;
     // (<FinalizeComponent>modal.componentInstance).initialize();
-    (<FinalizeComponent>modal.componentInstance).save.subscribe(data => {
-      this.dataFilter();
-    });
+    // (<FinalizeComponent>modal.componentInstance).save.subscribe(data => {
+    //   this.dataFilter();
+    // });
   }
 
   openAddReportModal() {
@@ -200,7 +211,11 @@ export class ReportListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getData();
+    this.spinner = true;
+    this.archiveService.getCurrentMonth().subscribe((current: ApiResponse<any>) => {
+      this.month = current.data;
+      this.getData();
+    });
   }
 
   getData() {
@@ -208,9 +223,11 @@ export class ReportListComponent implements OnInit {
       const userId = this.userService.getDecodedAccessToken().id;
       this.userService.getUser(userId).subscribe((user: ApiResponse<User>) => {
         this.user = user.data;
-        this.userService.getUsers().subscribe((users: ApiResponse<User[]>) => {
-          this.dropdownUserList = users.data;
-        });
+        if (this.user.role === 'Admin') {
+          this.userService.getUsers().subscribe((users: ApiResponse<User[]>) => {
+            this.dropdownUserList = users.data;
+          });
+        }
         this.getProjectList(this.user.id);
       });
     }
@@ -221,7 +238,7 @@ export class ReportListComponent implements OnInit {
     this.dataFilter();
   }
 
-  getProjectList(userid: string) {
+  getProjectList(userId: string) {
     const roleName = this.userService.getDecodedAccessToken().roleName;
     if (roleName === 'Admin') {
       this.admin = true;
@@ -232,7 +249,7 @@ export class ReportListComponent implements OnInit {
       });
 
     } else {
-      this.projectService.getProjectsUser(userid).subscribe((projects: ApiResponse<Project[]>) => {
+      this.projectService.getProjectsUser(userId).subscribe((projects: ApiResponse<Project[]>) => {
         this.dropdownProjectList = projects.data;
         this.projects = projects.data;
       });
@@ -245,10 +262,6 @@ export class ReportListComponent implements OnInit {
     let projectId = '';
     let userId = '';
 
-    const date = new Date(), year = date.getFullYear(), month = date.getMonth();
-    const startDate: Date = new Date(year, month, 1);
-    const endDate: Date = new Date(year, month + 1, 0);
-
     if (this.projectAssignedItems.length !== 0)
       projectId = this.projectAssignedItems[0].id;
 
@@ -256,28 +269,15 @@ export class ReportListComponent implements OnInit {
       userId = this.userAssignedItems[0].id;
 
     if (!this.userInfo)
-      this.getTableData(startDate, endDate, userId, projectId);
+      this.getTableData(userId, projectId);
     else {
-      this.getTableData(startDate, endDate, this.user.id, projectId);
+      this.getTableData(this.user.id, projectId);
     }
   }
 
-  getTableData(startDate?: Date, endDate?: Date, userId?: string, projectId?: string) {
-    this.service.getReports(startDate, endDate, userId, projectId)
+  getTableData(userId?: string, projectId?: string) {
+    this.service.getReports(userId, projectId)
       .subscribe((reports: ApiResponse<Report[]>) => {
-        // const reportList: ReportListItem[] = [];
-        // reports.data.forEach((report) => {
-        //   report.tasks.forEach((task) => {
-        //     reportList.push(new ReportListItem(
-        //       report.id,
-        //       report.date,
-        //       report.user,
-        //       task.project,
-        //       task.time
-        //     ));
-        //   });      
-        // });
-        // this.source.load(reportList);
         this.source.load(reports.data);
         this.calcTotalTime(reports.data);
         this.spinner = false;
@@ -303,6 +303,13 @@ export class ReportListComponent implements OnInit {
 
   formatDate(date: string): string {
     return `${date.substring(8, 10)}/${date.substring(5, 7)}/${date.substring(0, 4)}`;
+  }
+
+  getMonth() {
+    if(this.month) {
+      return this.months[this.month.month - 1];
+    }
+    return '';
   }
 
   // cleanRangeDate() {

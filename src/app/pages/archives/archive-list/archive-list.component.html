@@ -23,7 +23,8 @@
         </nb-tabset>
 
         <!-- Report list -->
-        <ngx-report-list *ngIf="selectedOption == 'report'" [user]="user" [year]="selectedYear" [month]="selectedMonth"></ngx-report-list>
+        <ngx-report-list *ngIf="selectedOption == 'report'" [user]="user" [year]="selectedYear" 
+        [month]="selectedMonth" (back)="unselectOption()"></ngx-report-list>
       </nb-card-body>
     </nb-card>
   </div>

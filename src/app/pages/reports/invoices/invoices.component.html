@@ -1,8 +1,15 @@
 <nb-card [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
   <nb-card-header>
-    <div>Invoices</div>
-    <br>
     <div class="row">
+      <div class="col-md-6">Invoices</div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-outline-danger btn-icon float-right" nbTooltip="Finalize month"
+          nbTooltipStatus="danger" (click)="finalizeMonth()" *ngIf="!userInfo">
+          <i class="fa fa-check"></i>
+        </button>
+      </div>
+    </div>
+    <!-- <div class="row">
       <div class="col-md-3">
         <div class="form-group">
           <select class="form-control" [(ngModel)]="selectedMonth" name="month">
@@ -26,7 +33,7 @@
           Filter
         </button>
       </div>
-    </div>
+    </div> -->
 
   </nb-card-header>
   <nb-card-body>

@@ -19,7 +19,7 @@ export class Invoice {
         this.time = time;
         this.extra = extra;
         this.internet = internet;
-        this.totalCUC = user.salary ? user.salary : 0 / 180.00 * time + extra + internet;
+        this.totalCUC = user.salary / 180.00 * time + extra + internet;
         this.month = month;
         this.year = year;
         this.updatedAt = updatedAt ? updatedAt : new Date();

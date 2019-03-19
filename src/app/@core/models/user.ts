@@ -33,6 +33,6 @@ export class User {
 export class UserMission {
     id: string;
     name: string;
-    time: string;
+    time: number;
 }
 

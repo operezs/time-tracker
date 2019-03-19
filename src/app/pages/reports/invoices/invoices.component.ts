@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
+import { NbGlobalLogicalPosition, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrService } from '@nebular/theme';
+import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { Invoice } from '../../../@core/models/invoice';
 import { ApiResponse } from '../../../@core/models/response';
 import { InvoiceService } from '../../../@core/data/invoice.service';
+import { ArchiveService } from '../../../@core/data/archive.service';
 
 @Component({
   selector: 'ngx-invoices',
@@ -12,7 +15,7 @@ import { InvoiceService } from '../../../@core/data/invoice.service';
 })
 export class InvoicesComponent implements OnInit {
 
-  selectedMonth: number;
+  /*selectedMonth: number;
   selectedYear: number;
 
   monthOptions = [
@@ -37,7 +40,7 @@ export class InvoicesComponent implements OnInit {
     { name: "2020", value: 2020 },
     { name: "2021", value: 2021 },
     { name: "2022", value: 2022 }
-  ];
+  ];*/
 
   settings = {
     hideSubHeader: true,
@@ -59,6 +62,20 @@ export class InvoicesComponent implements OnInit {
         type: 'number',
         filter: true,
       },
+      /*month: {
+        title: 'Month',
+        type: 'string',
+        filter: true,
+        valuePrepareFunction: (value) => {
+          let month = this.monthOptions[value].name;
+          return month;
+        }
+      },
+      year: {
+        title: 'Year',
+        type: 'number',
+        filter: true,
+      },*/
       time: {
         title: 'Hours',
         type: 'number',
@@ -80,17 +97,19 @@ export class InvoicesComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   spinner: boolean;
 
-  constructor(private service: InvoiceService) { }
+  constructor(private service: InvoiceService,
+    private archiveService: ArchiveService,
+    private toastrService: NbToastrService) { }
 
   ngOnInit() {
-    this.selectedMonth = 0;
-    this.selectedYear = 0;
+    // this.selectedMonth = 0;
+    // this.selectedYear = 0;
     this.spinner = true;
     this.getTableData();
   }
 
   getTableData() {
-    this.service.getInvoices(this.selectedMonth, this.selectedYear)
+    this.service.getInvoices()
                 .subscribe((invoices: ApiResponse<Invoice[]>) => {
       this.source.load(invoices.data);
       this.spinner = false;
@@ -100,5 +119,31 @@ export class InvoicesComponent implements OnInit {
   dataFilter() {
     this.spinner = true;
     this.getTableData();
+  }
+
+  finalizeMonth() {
+    if (confirm('Are you sure?')) {
+      this.spinner = true;
+      this.archiveService.createArchive().subscribe((created: ApiResponse<Number>) => {
+        this.showToast(created.data);
+        this.spinner = false;
+        this.dataFilter();
+      });
+    }
+  }
+
+  private showToast(archiveCount: Number) {
+    const config = {
+      status: NbToastStatus.INFO,
+      destroyByClick: true,
+      duration: 3000,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      hasIcon: true
+    };
+
+    this.toastrService.show(
+      `${archiveCount}`,
+      `Generated archives: `,
+      config);
   }
 }

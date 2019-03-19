@@ -3,6 +3,7 @@ import { MissionItemComponent } from '../mission-item/mission-item.component';
 import { Mission } from '../../../@core/models/mission';
 import { MissionService } from '../../../@core/data/mission.service';
 import { ApiResponse } from '../../../@core/models/response';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'ngx-mission-list',
@@ -11,42 +12,51 @@ import { ApiResponse } from '../../../@core/models/response';
 })
 export class MissionListComponent implements OnInit {
   
+  settings = {
+    hideSubHeader: true,
+    actions: false,
+    noDataMessage: "There are no data related to your request ...",
+
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true,
+      },
+      time: {
+        title: 'Hours',
+        type: 'string',
+        filter: true,
+      }
+    },
+  };
+  
   @Input() missions: Mission[];
-  @ViewChildren(MissionItemComponent) groups: QueryList<MissionItemComponent>;
 
   constructor() { }
 
   ngOnInit() { }
-  /**
-   * Invoked when all children (groups) are ready
-   */
-  ngAfterViewInit() {
-    // console.log (this.groups);
-    // Set active to first element
-    this.groups.toArray()[0].opened = true;
-    // Loop through all Groups
-    this.groups.toArray().forEach((t) => {
-      // when title bar is clicked
-      // (toggle is an @output event of Group)
-      t.toggle.subscribe(() => {
-        // Open the group
-        this.openGroup(t);
-      });
-      /*t.toggle.subscribe((group) => {
-        // Open the group
-        this.openGroup(group);
-      });*/
+
+  getTime(mission: Mission) {
+    let totalTime = 0;
+    mission.users.forEach(user => {
+      totalTime += user.time;
     });
+    return totalTime;
   }
 
-  /**
-   * Open an accordion group
-   * @param group   Group instance
-   */
-  openGroup(group: MissionItemComponent) {
-    // close other groups
-    this.groups.toArray().forEach((t) => t.opened = false);
-    // open current group
-    group.opened = true;
+  getTableData(mission: Mission) {
+    let source: LocalDataSource = new LocalDataSource();
+    source.load(mission.users);
+    return source;
+  }
+
+  getProjectInitials(projectName: string) {
+    let initials = '';
+    const names: string[] = projectName.split(' ');
+    names.forEach(name => {
+      initials += name.charAt(0).toUpperCase();
+    });
+    return initials;
   }
 }

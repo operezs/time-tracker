@@ -14,9 +14,8 @@ export class MissionService {
     this.baseUrl = `${this.global.apiUrl()}missions`;
   }
 
-  getMissions(startDate: Date, endDate: Date) {
-    let queryParams = `?startDate=${startDate}&endDate=${endDate}`;
-    return this.http.get<ApiResponse<Mission[]>>(`${this.baseUrl}${queryParams}`);
+  getMissions() {
+    return this.http.get<ApiResponse<Mission[]>>(this.baseUrl);
   }
 
 }

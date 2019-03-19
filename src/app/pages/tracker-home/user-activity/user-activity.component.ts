@@ -127,7 +127,7 @@ export class TrackerHomeUserActivityComponent {
     let hours: number;
 
     for (let user of this.users) {
-      this.reportService.getReports(startDate, endDate, '', user.id).subscribe((reports: ApiResponse<Report[]>) => {
+      this.reportService.getReportsByDate(user.id, startDate, endDate).subscribe((reports: ApiResponse<Report[]>) => {
         this.reports = reports.data;
         projectsUser = [];
         hours = 0;

@@ -1,6 +1,9 @@
 <nb-card [nbSpinner]="spinner" nbSpinnerSize="xxlarge">
   <nb-card-header>
-    <div>{{getMonthName(month)}} {{year}} Report</div>
+    <button class="btn btn-outline btn-info" (click)="goBack()">
+      <i class="ion-arrow-left-c"></i>
+      {{getMonthName(month)}} {{year}} Report
+    </button>
   </nb-card-header>
   <nb-card-body>
     <ng2-smart-table [settings]="settings" [source]="source">

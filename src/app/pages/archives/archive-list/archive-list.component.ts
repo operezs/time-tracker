@@ -59,6 +59,10 @@ export class ArchiveListComponent implements OnInit {
         (<InvoiceComponent>modal.componentInstance).year = this.selectedYear;
     }
 
+    unselectOption() {
+        this.selectedOption = '';
+    }
+
     goBack() {
         if (this.selectedOption) {
             this.selectedOption = null;
