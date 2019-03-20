@@ -17,7 +17,7 @@
           <input class="form-control" placeholder="Date report" [nbDatepicker]="formpicker" name="Date report"
             [(ngModel)]="reportDate" required>
         </div>
-        <nb-datepicker class="show-front" #formpicker></nb-datepicker>
+        <nb-datepicker class="show-front" #formpicker [min]="min" [max]="max"></nb-datepicker>
       </div>
     </div>
     <form (ngSubmit)="onSubmit()" #addTaskForm="ngForm">

@@ -48,9 +48,13 @@ const routes: Routes = [{
     },
     {
       path: 'projects',
-      canActivate: [AuthGuardAdmin],
       component: ProjectListComponent,
-    }, 
+    },
+    {
+      path: '',
+      redirectTo: 'home',
+      pathMatch: 'full',
+    }
 
 
 /*

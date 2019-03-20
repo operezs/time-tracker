@@ -19,6 +19,7 @@ import { getLocaleTimeFormat } from '@angular/common';
 import { InvoiceService } from '../../../@core/data/invoice.service';
 import { ArchiveService } from '../../../@core/data/archive.service';
 import { Invoice } from '../../../@core/models/invoice';
+import { Month } from '../../../@core/models/archive';
 
 @Component({
   selector: 'ngx-report-list',
@@ -37,7 +38,7 @@ export class ReportListComponent implements OnInit {
   admin = false;
   user: User;
   projects: Project[];
-  month: any;
+  month: Month;
   invoice: Invoice;
   spinner: boolean;
 
@@ -189,6 +190,7 @@ export class ReportListComponent implements OnInit {
     (<AddReportComponent>modal.componentInstance).titleForm = 'New Report';
     (<AddReportComponent>modal.componentInstance).user = this.user;
     (<AddReportComponent>modal.componentInstance).projects = this.projects;
+    (<AddReportComponent>modal.componentInstance).month = this.month;
     (<AddReportComponent>modal.componentInstance).save.subscribe(data => {
       this.dataFilter();
     });
@@ -200,6 +202,7 @@ export class ReportListComponent implements OnInit {
     (<AddReportComponent>modal.componentInstance).projects = this.projects;
     (<AddReportComponent>modal.componentInstance).titleForm = 'Edit Report';
     (<AddReportComponent>modal.componentInstance).user = this.user;
+    (<AddReportComponent>modal.componentInstance).month = this.month;
     (<AddReportComponent>modal.componentInstance).save.subscribe(data => {
       this.dataFilter();
     });
@@ -212,8 +215,8 @@ export class ReportListComponent implements OnInit {
 
   ngOnInit() {
     this.spinner = true;
-    this.archiveService.getCurrentMonth().subscribe((current: ApiResponse<any>) => {
-      this.month = current.data;
+    this.archiveService.getCurrentMonth().subscribe((currentMonth: ApiResponse<Month>) => {
+      this.month = currentMonth.data;
       this.getData();
     });
   }

@@ -56,6 +56,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Projects',
     icon: 'ion-settings',
     link: '/pages/projects',
+  },
+  {
+    title: 'Projects',
+    icon: 'ion-settings',
+    link: '/pages/user-projects',
   }/*,
   {
     title: 'FEATURES',

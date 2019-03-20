@@ -16,7 +16,7 @@ export class InvoiceComponent implements OnInit {
   @Input() user: User;
   @Input() month: number;
   @Input() year: number;
-  invoice: Invoice;
+  @Input() invoice: Invoice;
 
   months: string[] = [
     'January', 'February', 'March', 'April', 'May',
@@ -27,11 +27,7 @@ export class InvoiceComponent implements OnInit {
   constructor(private invoiceService: InvoiceService,
     private activeModal: NgbActiveModal) { }
 
-  ngOnInit() {
-    this.invoiceService.getInvoice(this.user.id, this.month, this.year).subscribe((invoice: ApiResponse<Invoice>) => {
-      this.invoice = invoice.data;
-    });
-  }
+  ngOnInit() { }
 
   getMonthName(index: number) {
     return this.months[index - 1] || 'NULL';

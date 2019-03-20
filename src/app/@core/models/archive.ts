@@ -4,3 +4,8 @@ export class Archive {
     year: number;
     months: number[];
 }
+
+export class Month {
+    month: number;
+    year: number;
+}

@@ -26,6 +26,10 @@ export class UserService {
     return this.http.get<ApiResponse<User[]>>(this.baseUrl);
   }
 
+  getDevelopers() {
+    return this.http.get<ApiResponse<User[]>>(`${this.baseUrl}/developer`);
+  }
+
   getUser(id: string) {
     return this.http.get<ApiResponse<User>>(`${this.baseUrl}/${id}`);
   }

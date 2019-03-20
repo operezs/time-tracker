@@ -93,7 +93,7 @@ export class ReportListComponent implements OnInit {
   getData() {
     this.spinner = true;
     const startDate: Date = new Date(this.year, this.month - 1, 1);
-    const endDate: Date = new Date(this.year, this.month, 1);
+    const endDate: Date = new Date(this.year, this.month, 0);
     this.getTableData(this.user.id, startDate, endDate);
   }
 

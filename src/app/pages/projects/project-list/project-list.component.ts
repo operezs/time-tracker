@@ -8,7 +8,7 @@ import { ProjectActionsComponent } from '../project-actions.component';
 import { ProjectService } from '../../../@core/data/project.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { ProjectInfoComponent } from './../project-info/project-info.component';
-import { Project } from '../../../@core/models/project';
+import { Project, IProject } from '../../../@core/models/project';
 import { ApiResponse } from '../../../@core/models/response';
 import { UserService } from '../../../@core/data/users.service';
 import { User } from '../../../@core/models/user';
@@ -94,6 +94,9 @@ export class ProjectListComponent implements OnInit {
           instance.view.subscribe(project => {
             this.onView(project);
           });
+          instance.refresh.subscribe(() => {
+            this.getTableData();
+          });
         },
         width: '10%',
       },
@@ -146,19 +149,19 @@ export class ProjectListComponent implements OnInit {
   getTableData() {
     const roleName = this.userService.getDecodedAccessToken().roleName;
     this.userid = this.userService.getDecodedAccessToken().id;
-    if (roleName === 'Admin') {
+    // if (roleName === 'Admin') {
         this.admin = true;
         this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
           this.source.load(projects.data);
           this.spinner = false;
           });
-      }
-    else {
-      this.projectService.getProjectsUser(this.userid).subscribe((projects: ApiResponse<Project[]>) => {
-        this.source.load(projects.data);
-        this.spinner = false;
-        }); 
-    }  
+    //   }
+    // else {
+    //   this.projectService.getProjectsUser(this.userid).subscribe((projects: ApiResponse<Project[]>) => {
+    //     this.source.load(projects.data);
+    //     this.spinner = false;
+    //     }); 
+    // }  
   }
 
 }

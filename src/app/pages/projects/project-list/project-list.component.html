@@ -5,7 +5,7 @@
         Project List
       </div>
       <div class="col-md-2">
-        <button type="button" style = "float: right" 
+        <button *ngIf="roleName==='Admin'" type="button" style = "float: right" 
                 class="btn btn-primary d-flex" 
                 (click)="openAddProjectModal()">
           Add New

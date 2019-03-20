@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
 
-import { Project} from '../models/project';
+import { Project, IProject} from '../models/project';
 import { ApiResponse } from '../models/response';
 
 @Injectable()
@@ -30,10 +30,10 @@ export class ProjectService {
     getProject(id: string) {
       return this.http.get<ApiResponse<Project>>(`${this.baseUrl}/${id}`);
     }
-    createProject(project: Project) {
+    createProject(project: IProject) {
       return this.http.post(this.baseUrl, project);
     }
-    updateProject(project: Project) {
+    updateProject(project: IProject) {
       return this.http.put(`${this.baseUrl}/${project.id}`, project);
     }
     deleteProject(id: string) {

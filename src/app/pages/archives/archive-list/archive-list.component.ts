@@ -6,6 +6,8 @@ import { UserService } from '../../../@core/data/users.service';
 import { ApiResponse } from '../../../@core/models/response';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InvoiceComponent } from '../invoice/invoice.component';
+import { Invoice } from '../../../@core/models/invoice';
+import { InvoiceService } from '../../../@core/data/invoice.service';
 
 @Component({
     selector: 'ngx-archive-list',
@@ -21,9 +23,11 @@ export class ArchiveListComponent implements OnInit {
     selectedOption: string;
     selectedMonth: number;
     selectedYear: number;
+    spinner = false;
 
     constructor(private archiveService: ArchiveService,
         private userService: UserService,
+        private invoiceService: InvoiceService,
         private modalService: NgbModal) { }
 
     ngOnInit() {
@@ -36,8 +40,14 @@ export class ArchiveListComponent implements OnInit {
         } else {
             userId = this.user.id;
         }
+        this.spinner = true;
         this.archiveService.getArchives(userId).subscribe((archives: ApiResponse<Archive[]>) => {
             this.archives = archives.data;
+            this.spinner = false;
+        },
+        error => {            
+            this.spinner = false;
+            alert(error);
         });
 
     }
@@ -50,13 +60,17 @@ export class ArchiveListComponent implements OnInit {
 
     showInvoice(year: number, month: number) {
         // this.selectedOption = "invoice";
+        this.spinner = true;
         this.selectedYear = year;
         this.selectedMonth = month;
-
-        const modal: NgbModalRef = this.modalService.open(InvoiceComponent, { size: 'sm', container: 'nb-layout' });
-        (<InvoiceComponent>modal.componentInstance).user = this.user;
-        (<InvoiceComponent>modal.componentInstance).month = this.selectedMonth;
-        (<InvoiceComponent>modal.componentInstance).year = this.selectedYear;
+        this.invoiceService.getInvoice(this.user.id, this.selectedMonth, this.selectedYear).subscribe((invoice: ApiResponse<Invoice>) => {
+            const modal: NgbModalRef = this.modalService.open(InvoiceComponent, { size: 'sm', container: 'nb-layout' });
+            (<InvoiceComponent>modal.componentInstance).user = this.user;
+            (<InvoiceComponent>modal.componentInstance).month = this.selectedMonth;
+            (<InvoiceComponent>modal.componentInstance).year = this.selectedYear;
+            (<InvoiceComponent>modal.componentInstance).invoice = invoice.data;
+            this.spinner = false;
+        })
     }
 
     unselectOption() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { GlobalService } from './global.service';
-import { Archive } from '../models/archive';
+import { Archive, Month } from '../models/archive';
 import { ApiResponse } from '../models/response';
 import { User } from '../models/user';
 
@@ -29,7 +29,7 @@ export class ArchiveService {
   }
 
   getCurrentMonth() {
-    return this.http.get<ApiResponse<any>>(`${this.baseUrl}/current`);
+    return this.http.get<ApiResponse<Month>>(`${this.baseUrl}/current`);
   }
 
   createArchive() {

@@ -18,11 +18,13 @@ export class AuthGuardAdmin implements CanActivate {
     return this.authService.isAuthenticated()
     .pipe(
       tap(authenticated => {
-        if (!authenticated || roleName !== 'Admin') {
+        if (!authenticated) {
            this.router.navigate(['auth/login']);
+        }
+        if(roleName !== 'Admin') {
+          this.router.navigate(['pages/home']);
         }
       }),
     );    
   }
 }
-

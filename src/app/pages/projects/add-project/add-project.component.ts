@@ -2,9 +2,8 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
 
-import { Project } from '../../../@core/models/project';
+import { Project, IProject } from '../../../@core/models/project';
 import { ProjectService } from '../../../@core/data/project.service';
 
 import { User } from '../../../@core/models/user';
@@ -56,7 +55,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   getItemsDropdown() {
-      this.userService.getUsers().subscribe((users: ApiResponse<User[]>) => {
+      this.userService.getDevelopers().subscribe((users: ApiResponse<User[]>) => {
         const userDrop: User[] = [];
         for (const user of users.data) {
           if (!user.isDeleted) {
@@ -73,7 +72,7 @@ export class AddProjectComponent implements OnInit {
   this.project.users = [];
   if (this.userAssignedItems.length !== 0) {
       for (let i = 0; i < this.userAssignedItems.length; i++) {
-            this.project.users.push( this.userAssignedItems[i].id );
+            this.project.users.push( this.userAssignedItems[i]);
           }
     }
   }
@@ -82,12 +81,12 @@ export class AddProjectComponent implements OnInit {
   this.userAssignedMultiSelect();
   
   if (this.project.id) {
-      this.projectService.updateProject(this.project).subscribe( data => {
+      this.projectService.updateProject(new IProject(this.project)).subscribe( data => {
       this.closeModal();
       this.onSave();
     });
   } else {
-      this.projectService.createProject(this.project).subscribe( data => {
+      this.projectService.createProject(new IProject(this.project)).subscribe( data => {
       this.closeModal();
       this.onSave();
     });

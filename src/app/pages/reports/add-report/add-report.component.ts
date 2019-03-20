@@ -9,6 +9,7 @@ import { Project } from '../../../@core/models/project';
 import { ApiResponse } from '../../../@core/models/response';
 import { User } from '../../../@core/models/user';
 import { Task } from '../../../@core/models/task';
+import { Month } from '../../../@core/models/archive';
 
 
 
@@ -24,6 +25,7 @@ export class AddReportComponent implements OnInit {
   projects: Project[];
   project: Project;
   titleForm: string;
+  month: Month;
 
   selectedProjects = [];
   dropdownList = [];
@@ -50,25 +52,23 @@ export class AddReportComponent implements OnInit {
   constructor(private activeModal: NgbActiveModal,
     private reportService: ReportService,
     protected dateService: NbDateService<Date>) {
-    this.min = this.dateService.addDay(this.dateService.today(), -5);
-    this.max = this.dateService.addDay(this.dateService.today(), 5);
+    // this.min = this.dateService.addDay(this.dateService.today(), -5);
+    // this.max = this.dateService.addDay(this.dateService.today(), 5);
   }
 
   ngOnInit() {
     this.getItemsDropdown();
-    this.reportDate = new Date();
+    this.min = new Date(this.month.year, this.month.month - 1, 1);
+    this.max = new Date(this.month.year, this.month.month, 0);
+
+    this.reportDate = new Date(this.month.year, this.month.month - 1, 1); // == min
     if (!this.report) {
-      this.report = new Report(this.user, new Date());
+      this.report = new Report(this.user, this.reportDate);
     } else {
       this.reportDate = new Date(this.report.date);
     }
     this.newTask = new Task();
-
-    // if (this.report.id) {
-    //     this.userName = this.report.user.firstName;
-    // } else {
-    //     this.userName = this.user.firstName;
-    // }
+    
   }
 
   closeModal() {
