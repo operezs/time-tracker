@@ -134,6 +134,10 @@ export class ProjectListComponent implements OnInit {
   }
 
   ngOnInit() {
+    const roleName = this.userService.getDecodedAccessToken().roleName;
+    if (roleName === 'Admin') {
+      this.admin = true;
+    }
     this.userService.getUsers().subscribe((users: ApiResponse<User[]>) => {
       const users2: User[] = [];
       for (const user of users.data) {
@@ -147,14 +151,13 @@ export class ProjectListComponent implements OnInit {
 
 
   getTableData() {
-    const roleName = this.userService.getDecodedAccessToken().roleName;
+    
     this.userid = this.userService.getDecodedAccessToken().id;
-    // if (roleName === 'Admin') {
-        this.admin = true;
-        this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
-          this.source.load(projects.data);
-          this.spinner = false;
-          });
+   
+    this.projectService.getProjects().subscribe((projects: ApiResponse<Project[]>) => {
+      this.source.load(projects.data);
+      this.spinner = false;
+      });
     //   }
     // else {
     //   this.projectService.getProjectsUser(this.userid).subscribe((projects: ApiResponse<Project[]>) => {
